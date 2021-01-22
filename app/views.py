@@ -41,7 +41,7 @@ def about(request):
         {
             'title':'Sovelluksesta',
             'message':'Tietoa sovelluksesta',
-            'year':datetime.now(),
+            'year':2021,
         }
     )
 

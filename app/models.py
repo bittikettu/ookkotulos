@@ -29,6 +29,7 @@ class Event(models.Model):
     type = models.ForeignKey(EventTypes, on_delete=models.CASCADE)
     max = models.SmallIntegerField()
     date = models.DateTimeField()
+    description = models.TextField(max_length=500,default='')
 
     class Meta:
         ordering = ['date']

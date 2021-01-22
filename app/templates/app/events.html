@@ -2,8 +2,8 @@
 
 {% block content %}
 
-<h2>{{ title }}.</h2>
-<h3>{{ message }}</h3>
+<h2>{{ title }}</h2>
+<!-- <h3>{{ message }}</h3> -->
 
 {% if user.is_authenticated %}
 
@@ -17,14 +17,34 @@
 <ul class="list-group">
     {% for event in events %}
     <li class="list-group-item">
+        <h2>{{ event.name }}</h2>
+          <div>
+              <span class="badge badge-secondary">{{ event.type }}</span>
+            {{ event.date }}
+          </div>
+        <p>
+            {{ event.description|linebreaksbr }}
+        </p>
         {% if user.is_authenticated %}
-        <div class="btn-group" role="group" aria-label="Osallistu">
-        <button type="button" class="btn btn-success btn-sm">Osallistu</button>
-        <button type="button" class="btn btn-danger btn-sm">Peruuta</button>
-         </div>
+            {% for member in event.members.all %}
+                <p>{{ member }}</p>
+            {% endfor %}
         {% endif %}
-        <strong>{{ event.name }}</strong> <span class="badge badge-secondary">{{ event.type }}</span> {{ event.date }} 0/<em>{{ event.max }}</em>
-        
+        <div class="btn-group" role="group" aria-label="Osallistu">
+        {% if user.is_authenticated %}
+            {% if event.members.all|length < event.max  %}
+                <button type="button" class="btn btn-success btn-sm">Osallistu</button>
+            {% endif %}
+            <button type="button" class="btn btn-danger btn-sm">Peruuta</button>
+            
+         
+        {% endif %}
+          <button type="button" class="btn btn-secondary btn-sm">{{ event.members.all|length }}/<em>{{ event.max }}</em></button>
+            </div>
+
+
+
+      
 
 </li>
     {% endfor %}
