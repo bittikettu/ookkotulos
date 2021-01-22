@@ -2,9 +2,10 @@
 Definition of views.
 """
 
-from datetime import datetime
+import datetime
 from django.shortcuts import render
 from django.http import HttpRequest
+from .models import *
 
 def home(request):
     """Renders the home page."""
@@ -13,8 +14,8 @@ def home(request):
         request,
         'app/index.html',
         {
-            'title':'Home Page',
-            'year':datetime.now().year,
+            'title':'Etusivu',
+            'year':2021,
         }
     )
 
@@ -25,9 +26,9 @@ def contact(request):
         request,
         'app/contact.html',
         {
-            'title':'Contact',
-            'message':'Your contact page.',
-            'year':datetime.now().year,
+            'title':'Tekijät',
+            'message':'Tekijät',
+            'year':2021,
         }
     )
 
@@ -38,8 +39,21 @@ def about(request):
         request,
         'app/about.html',
         {
-            'title':'About',
-            'message':'Your application description page.',
-            'year':datetime.now().year,
+            'title':'Sovelluksesta',
+            'message':'Tietoa sovelluksesta',
+            'year':datetime.now(),
+        }
+    )
+
+def events(request):
+    """Renders the about page."""
+    assert isinstance(request, HttpRequest)
+    return render(
+        request,
+        'app/events.html',
+        {
+            'title':'Tapahtumat',
+            'message':'Tulevat tapahtumat',
+            'events':Event.objects.all(),
         }
     )

@@ -1,0 +1,35 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}.</h2>
+<h3>{{ message }}</h3>
+
+{% if user.is_authenticated %}
+
+{% else %}
+<div class="alert alert-info" role="alert">
+  Tapahtumiin ilmoittautuminen vaatii kirjautumisen.
+</div>
+{% endif %}
+
+
+<ul class="list-group">
+    {% for event in events %}
+    <li class="list-group-item">
+        {% if user.is_authenticated %}
+        <div class="btn-group" role="group" aria-label="Osallistu">
+        <button type="button" class="btn btn-success btn-sm">Osallistu</button>
+        <button type="button" class="btn btn-danger btn-sm">Peruuta</button>
+         </div>
+        {% endif %}
+        <strong>{{ event.name }}</strong> <span class="badge badge-secondary">{{ event.type }}</span> {{ event.date }} 0/<em>{{ event.max }}</em>
+        
+
+</li>
+    {% endfor %}
+    {% endblock %}
+</ul>
+
+
+

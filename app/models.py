@@ -40,7 +40,7 @@ class EventsJoined(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     date_joined = models.DateField()
-    cancel = models.BooleanField(name='Peruutus',null = True)
+    cancel = models.BooleanField(name='Peruutus',default=False)
     date_cancel = models.DateField(null = True)
 
     class Meta:
