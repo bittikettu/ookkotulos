@@ -41,19 +41,23 @@ class EventsJoined(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     date_joined = models.DateField()
-    cancel = models.BooleanField(name='Peruutus',default=False)
+    cancel = models.BooleanField(name='Peruutus', default=False)
+    join = models.BooleanField(default=False)
     date_cancel = models.DateField(null = True)
 
     class Meta:
         unique_together = [['person', 'event']]
 
-    def cancel():
-        cancel = True
-        date_cancel = datetime.date.today()
+    def cancelevent(self):
+        self.cancel = True
+        self.join = False
+        self.date_cancel = datetime.date.today()
 
-    def join():
-        cancel = False
-        date_joined = datetime.date.today()
+    def jointoevent(self):
+        self.join = True
+        self.cancel = False
+        self.date_joined = datetime.date.today()
+        print("Joining to event")
 
 
     def __str__(self):

@@ -14,6 +14,8 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('about/', views.about, name='about'),
     path('events/', views.events, name='events'),
+    path('cancelevent/<str:pk>/', views.cancelevent, name='cancelevent'),
+    path('joinevent/<str:pk>/', views.joinevent, name='joinevent'),
     path('login/',
          LoginView.as_view
          (

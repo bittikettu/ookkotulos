@@ -12,7 +12,11 @@
   Tapahtumiin ilmoittautuminen vaatii kirjautumisen.
 </div>
 {% endif %}
-
+<pre>
+    {% for join in eventsjoined.all %}
+        {{ join }}
+    {% endfor %}
+</pre>
 
 <ul class="list-group">
     {% for event in events %}
@@ -22,31 +26,46 @@
               <span class="badge badge-secondary">{{ event.type }}</span>
             {{ event.date }}
           </div>
-        <p>
+        <div>
             {{ event.description|linebreaksbr }}
-        </p>
+        </div>
+        
+
         {% if user.is_authenticated %}
             {% for member in event.members.all %}
-                <p>{{ member }}</p>
+                    <div>
+                    <span class="badge badge-light">{{ member }}</span>
+                    </div>
             {% endfor %}
         {% endif %}
-        <div class="btn-group" role="group" aria-label="Osallistu">
+
         {% if user.is_authenticated %}
-            {% if event.members.all|length < event.max  %}
-                <button type="button" class="btn btn-success btn-sm">Osallistu</button>
+         <!--<form id="joinForm" action="/eventaction/" method="post">-->
+        <p>
+        <div class="btn-group" role="group" aria-label="Osallistu">
+            {% if event.members.all|length < event.max %}
+
+
+
+            <a class="btn btn-success" href="{% url 'joinevent' event.id  %}" type="button" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-thumbs-up"> </span> Osallistu</a>
             {% endif %}
-            <button type="button" class="btn btn-danger btn-sm">Peruuta</button>
+            {% for join in eventsjoined.all %}
+                    {% if join.event == event %}
+                             <a class="btn btn-danger" href="{% url 'cancelevent' event.id  %}" type="button" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-thumbs-down"> </span> Peruuta</a>
+                    {% endif %}
+            {% endfor %}
+           
+            <button class="btn btn-secondary">{{ event.members.all|length }}/<em>{{ event.max }}</em></button>
+
             
-         
+
+        </div>
+        </p>
+        <!--</form>-->
         {% endif %}
-          <button type="button" class="btn btn-secondary btn-sm">{{ event.members.all|length }}/<em>{{ event.max }}</em></button>
-            </div>
+    
 
-
-
-      
-
-</li>
+    </li>
     {% endfor %}
     {% endblock %}
 </ul>
