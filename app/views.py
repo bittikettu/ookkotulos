@@ -48,8 +48,9 @@ def about(request):
 def events(request):
     """Renders the about page."""
     assert isinstance(request, HttpRequest)
-    person = Person.objects.get(user=request.user)
-    return render(
+    try:
+        person = Person.objects.get(user=request.user)
+        return render(
         request,
         'app/events.html',
         {
@@ -59,6 +60,17 @@ def events(request):
             'eventsjoined':EventsJoined.objects.all().filter(person=person),
         }
     )
+    except:
+        print("not found")
+        return render(
+            request,
+            'app/events.html',
+            {
+                'title':'Tapahtumat',
+                'message':'Tulevat tapahtumat',
+                'events':Event.objects.all(),
+            }
+        )
 
 def cancelevent(request, pk):
     eventti = Event.objects.get(id=pk)
