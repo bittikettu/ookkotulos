@@ -20,6 +20,7 @@
 
 <ul class="list-group">
     {% for event in events %}
+    <a name="{{ event.id }}"></a>
     <li class="list-group-item">
         <h2>{{ event.name }}</h2>
           <div>

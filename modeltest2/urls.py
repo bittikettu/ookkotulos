@@ -7,6 +7,7 @@ from django.urls import path
 from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView
 from app import forms, views
+import django.contrib.auth.forms
 
 
 urlpatterns = [
@@ -14,6 +15,7 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('about/', views.about, name='about'),
     path('events/', views.events, name='events'),
+    path("register/", views.register, name="register"),  # <-- added
     path('cancelevent/<str:pk>/', views.cancelevent, name='cancelevent'),
     path('joinevent/<str:pk>/', views.joinevent, name='joinevent'),
     path('login/',

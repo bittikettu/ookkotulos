@@ -6,16 +6,16 @@ from django.db import models
 from django.contrib.auth.models import User,Group,Permission,AbstractUser
 import datetime
 
-class Person(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+class Person(AbstractUser):
     bio = models.TextField(max_length=500, blank=True)
     events = models.ManyToManyField('Event', through='EventsJoined')
-
-    class Meta:
-        ordering = ['user']
-
+    
     def __str__(self):
-        return f'{self.user.first_name} {self.user.last_name} ({self.user})'
+        self.username
+        if len(self.first_name) == 0:
+            return f'{self.username}'
+        else:
+            return f'{self.first_name} {self.last_name}'
 
 class EventTypes(models.Model):
     name = models.CharField(max_length=128)
@@ -43,7 +43,7 @@ class EventsJoined(models.Model):
     date_joined = models.DateField()
     cancel = models.BooleanField(name='Peruutus', default=False)
     join = models.BooleanField(default=False)
-    date_cancel = models.DateField(null = True)
+    date_cancel = models.DateField(null=True, blank=True)
 
     class Meta:
         unique_together = [['person', 'event']]
@@ -59,7 +59,7 @@ class EventsJoined(models.Model):
         self.date_joined = datetime.date.today()
         print("Joining to event")
 
-
     def __str__(self):
-        return self.event.name
+        return f'{self.event.name} {self.person.username}'
+
 

@@ -14,17 +14,17 @@
         <p>
 Luo k&auml;ytt&auml;j&auml;tunnus ja kirjaudu j&auml;rjestelm&auml;&auml;n.
         </p>
-        <p><a class="btn btn-default" href="https://djangobook.com/django-tutorials/">Luo tunnus heti</a></p>
+        <p><a class="btn btn-default" href="{% url 'register' %}">Luo tunnus heti</a></p>
     </div>
-    <div class="col-md-4">
+ <!--   <div class="col-md-4">
         <h2>Valitse tai luo tapahtumia</h2>
         <p>Voit katsella ja luoda tapahtumia.</p>
-        <p><a class="btn btn-default" href="https://pypi.org/">Luo tapahtuma</a></p>
-    </div>
+        <p><a class="btn btn-default" href="#">Luo tapahtuma</a></p>
+    </div>-->
     <div class="col-md-4">
         <h2>Ilmoittaudu tapahtumaa</h2>
         <p>Ilmoittaudu tapahtumaan.</p>
-        <p><a class="btn btn-default" href="http://azure.microsoft.com">Ilmoittaudu tapahtumaan</a></p>
+        <p><a class="btn btn-default" href="{% url 'events' %}">Ilmoittaudu tapahtumaan</a></p>
     </div>
 </div>
 

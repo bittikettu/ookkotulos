@@ -3,9 +3,10 @@ Definition of views.
 """
 
 import datetime
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from .models import *
+from .forms import *
 
 def home(request):
     """Renders the home page."""
@@ -49,7 +50,7 @@ def events(request):
     """Renders the about page."""
     assert isinstance(request, HttpRequest)
     try:
-        person = Person.objects.get(user=request.user)
+        person = request.user #Person.objects.get(user=request.user)
         return render(
         request,
         'app/events.html',
@@ -57,7 +58,7 @@ def events(request):
             'title':'Tapahtumat',
             'message':'Tulevat tapahtumat',
             'events':Event.objects.all(),
-            'eventsjoined':EventsJoined.objects.all().filter(person=person),
+            'eventsjoined':EventsJoined.objects.all().filter(person=request.user),
         }
     )
     except:
@@ -74,7 +75,7 @@ def events(request):
 
 def cancelevent(request, pk):
     eventti = Event.objects.get(id=pk)
-    person = Person.objects.get(user=request.user)
+    person = request.user #Person.objects.get(user=request.user)
     joininfo = EventsJoined.objects.get(event=eventti,person=person)
     print(joininfo)
     joininfo.delete()
@@ -96,7 +97,7 @@ def cancelevent(request, pk):
 
 def joinevent(request, pk):
     eventti = Event.objects.get(id=pk)
-    person = Person.objects.get(user=request.user)
+    person = request.user #Person.objects.get(user=request.user)
     try:
         jointoevent = EventsJoined.objects.get(event=eventti,person=person)
     except:
@@ -115,5 +116,24 @@ def joinevent(request, pk):
             'message':'Tulevat tapahtumat',
             'events':Event.objects.all(),
             'eventsjoined':EventsJoined.objects.all().filter(person=person),
+        }
+    )
+
+def register(response):
+    if response.method == "POST":
+        form = RegisterForm(response.POST)
+        if form.is_valid():
+            form.save()
+
+        return redirect("/login")
+    else:
+        form = RegisterForm()
+    return render(
+        response, 
+        "app/register.html", 
+        {
+            'title':'Liity',
+            'message':'Liity tapahtumailmoon',
+            "form":form
         }
     )

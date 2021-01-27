@@ -27,6 +27,9 @@
                     <li><a href="{% url 'events' %}">Tapahtumat</a></li>
                     <li><a href="{% url 'about' %}">Sovelluksesta</a></li>
                     <li><a href="{% url 'contact' %}">Tekij&auml;t</a></li>
+                    {% if user.is_authenticated == False %}
+                    <li><a href="{% url 'events' %}">Liity!</a></li>
+                    {% endif %}
                 </ul>
                 {% include 'app/loginpartial.html' %}
             </div>
