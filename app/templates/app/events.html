@@ -12,11 +12,6 @@
   Tapahtumiin ilmoittautuminen vaatii kirjautumisen.
 </div>
 {% endif %}
-<pre>
-    {% for join in eventsjoined.all %}
-        {{ join }}
-    {% endfor %}
-</pre>
 
 <ul class="list-group">
     {% for event in events %}
