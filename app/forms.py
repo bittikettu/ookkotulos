@@ -24,3 +24,14 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model = Person
         fields = ["username", "email", "password1", "password2"]
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control','id':'formGroupExampleInput','placeholder':'Käyttäjätunnus'}),
+            'email': forms.TextInput(attrs={'class': 'form-control','id':'formGroupExampleInput','placeholder':'Sähköposti'}),
+            'password1': forms.PasswordInput(),
+            'password2': forms.PasswordInput(),
+        }
+    def __init__(self, *args, **kwargs):
+        super(RegisterForm, self).__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs['class'] = 'form-control'
+        self.fields['password1'].widget.attrs['class'] = 'form-control'
+        self.fields['password2'].widget.attrs['class'] = 'form-control'
