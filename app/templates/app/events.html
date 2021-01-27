@@ -14,26 +14,33 @@
 {% endif %}
 
 
-<ul class="list-group">
+
+<div class="row">
     {% for event in events %}
     <a name="{{ event.id }}"></a>
-    <li class="list-group-item">
+    <div class="col-md-3" >
         <h2>{{ event.name }}</h2>
+        
           <div>
               <span class="badge badge-secondary">{{ event.type }}</span>
             {{ event.date }}
           </div>
+
         <div>
+            <p></p>
             {{ event.description|linebreaksbr }}
         </div>
         
 
         {% if user.is_authenticated %}
+        <hr />
+        <div>
             {% for member in event.members.all %}
-                    <div>
+                    
                     <span class="badge badge-light">{{ member }}</span>
-                    </div>
+                    
             {% endfor %}
+                        </div>
         {% endif %}
 
         {% if user.is_authenticated %}
@@ -41,8 +48,6 @@
         <p>
         <div class="btn-group" role="group" aria-label="Osallistu">
             {% if event.members.all|length < event.max %}
-
-
 
             <a class="btn btn-success" href="{% url 'joinevent' event.id  %}" type="button" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-thumbs-up"> </span> Osallistu</a>
             {% endif %}
@@ -62,10 +67,44 @@
         {% endif %}
     
 
+    </div>
+    {% endfor %}
+
+
+
+</div>
+
+
+
+
+<h3>Menneet tapahtumat</h3>
+<ul class="list-group">
+    {% for event in pastevents %}
+    <a name="{{ event.id }}"></a>
+    <li class="list-group-item">
+        <h2>{{ event.name }}</h2>
+          <div>
+              <span class="badge badge-secondary">{{ event.type }}</span>
+            {{ event.date }}
+          </div>
+        <div>
+            <p></p>
+            {{ event.description|linebreaksbr }}
+        </div>
+        
+
+        {% if user.is_authenticated %}
+            {% for member in event.members.all %}
+                    <div>
+                    <span class="badge badge-light">{{ member }}</span>
+                    </div>
+            {% endfor %}
+        {% endif %}
+        
     </li>
     {% endfor %}
-    {% endblock %}
-</ul>
 
+</ul>
+{% endblock %}
 
 

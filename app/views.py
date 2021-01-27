@@ -57,7 +57,8 @@ def events(request):
         {
             'title':'Tapahtumat',
             'message':'Tulevat tapahtumat',
-            'events':Event.objects.all(),
+            'events':Event.objects.all().filter(date__gte=timezone.now()),
+            'pastevents':Event.objects.all().filter(date__lte=timezone.now()),
             'eventsjoined':EventsJoined.objects.all().filter(person=request.user,join=True),
         }
     )
@@ -90,8 +91,9 @@ def cancelevent(request, pk):
         {
             'title':'Tapahtumat',
             'message':'Tulevat tapahtumat',
-            'events':Event.objects.all(),
-            'eventsjoined':EventsJoined.objects.all().filter(person=person,join=True),
+            'events':Event.objects.all().filter(date__gte=timezone.now()),
+            'pastevents':Event.objects.all().filter(date__lte=timezone.now()),
+            'eventsjoined':EventsJoined.objects.all().filter(person=person),
         }
     )
 
@@ -114,7 +116,8 @@ def joinevent(request, pk):
         {
             'title':'Tapahtumat',
             'message':'Tulevat tapahtumat',
-            'events':Event.objects.all(),
+            'events':Event.objects.all().filter(date__gte=timezone.now()),
+            'pastevents':Event.objects.all().filter(date__lte=timezone.now()),
             'eventsjoined':EventsJoined.objects.all().filter(person=person),
         }
     )

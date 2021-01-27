@@ -5,6 +5,7 @@ Definition of models.
 from django.db import models
 from django.contrib.auth.models import User,Group,Permission,AbstractUser
 import datetime
+from django.utils import timezone
 
 class Person(AbstractUser):
     bio = models.TextField(max_length=500, blank=True)
