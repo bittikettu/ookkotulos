@@ -52,6 +52,7 @@ class EventsJoined(models.Model):
         self.cancel = True
         self.join = False
         self.date_cancel = datetime.date.today()
+        print("Cancel event")
 
     def jointoevent(self):
         self.join = True

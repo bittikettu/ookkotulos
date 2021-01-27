@@ -58,7 +58,7 @@ def events(request):
             'title':'Tapahtumat',
             'message':'Tulevat tapahtumat',
             'events':Event.objects.all(),
-            'eventsjoined':EventsJoined.objects.all().filter(person=request.user),
+            'eventsjoined':EventsJoined.objects.all().filter(person=request.user,join=True),
         }
     )
     except:
@@ -91,7 +91,7 @@ def cancelevent(request, pk):
             'title':'Tapahtumat',
             'message':'Tulevat tapahtumat',
             'events':Event.objects.all(),
-            'eventsjoined':EventsJoined.objects.all().filter(person=person),
+            'eventsjoined':EventsJoined.objects.all().filter(person=person,join=True),
         }
     )
 
