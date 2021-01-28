@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from .models import *
 from .forms import *
+from django.contrib.admin.models import LogEntry, ADDITION, CHANGE
 
 def home(request):
     """Renders the home page."""
@@ -109,6 +110,13 @@ def joinevent(request, pk):
     print(jointoevent)
     print(person)
     jointoevent.save()
+    LogEntry.objects.log_action(
+                user_id=request.user.id,
+                content_type_id=ContentType.objects.get_for_model(model_object).pk,
+                object_id=object.id,
+                object_repr=unicode(object.title),
+                action_flag=ADDITION if create else CHANGE)
+
 
     return render(
         request,
