@@ -34,6 +34,9 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'events' %}"><i class="bi bi-info-circle"> Tapahtumat</i></a>
         </li>
+                            {% if user.is_authenticated == False %}
+                    <li><a class="nav-link" href="{% url 'register' %}">Liity!</a></li>
+                    {% endif %}
           {% if user.is_authenticated %}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Toiminnot</a>
