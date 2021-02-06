@@ -2,6 +2,7 @@
 
 {% block content %}
 
+<div class="container">
 <h2>{{ title }}</h2>
 <!-- <h3>{{ message }}</h3> -->
 
@@ -12,99 +13,49 @@
   Tapahtumiin ilmoittautuminen vaatii kirjautumisen.
 </div>
 {% endif %}
-
-
-
-<div class="row">
-    {% for event in events %}
-    <a name="{{ event.id }}"></a>
-    <div class="col-md-3" >
-        <h2>{{ event.name }}</h2>
-        
-          <div>
-              <span class="badge badge-secondary">{{ event.type }}</span>
-            {{ event.date }}
-          </div>
-
-        <div>
-            <p></p>
-            {{ event.description|linebreaksbr }}
-        </div>
-        
-
-        {% if user.is_authenticated %}
-        <hr />
-        <div>
-            {% for member in event.members.all %}
-                    
-                    <span class="badge badge-light">{{ member }}</span>
-                    
-            {% endfor %}
-                        </div>
-        {% endif %}
-
-        {% if user.is_authenticated %}
-         <!--<form id="joinForm" action="/eventaction/" method="post">-->
-        <p>
-        <div class="btn-group" role="group" aria-label="Osallistu">
-            {% if event.members.all|length < event.max %}
-
-            <a class="btn btn-success" href="{% url 'joinevent' event.id  %}" type="button" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-thumbs-up"> </span> Osallistu</a>
-            {% endif %}
-            {% for join in eventsjoined.all %}
-                    {% if join.event == event %}
-                             <a class="btn btn-danger" href="{% url 'cancelevent' event.id  %}" type="button" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-thumbs-down"> </span> Peruuta</a>
-                    {% endif %}
-            {% endfor %}
-           
-            <button class="btn btn-secondary">{{ event.members.all|length }}/<em>{{ event.max }}</em></button>
-
-            
-
-        </div>
-        </p>
-        <!--</form>-->
-        {% endif %}
-    
-
-    </div>
-    {% endfor %}
-
-
-
-</div>
-
-
-
-
-<h3>Menneet tapahtumat</h3>
-<ul class="list-group">
-    {% for event in pastevents %}
-    <a name="{{ event.id }}"></a>
-    <li class="list-group-item">
-        <h2>{{ event.name }}</h2>
-          <div>
-              <span class="badge badge-secondary">{{ event.type }}</span>
-            {{ event.date }}
-          </div>
-        <div>
-            <p></p>
-            {{ event.description|linebreaksbr }}
-        </div>
-        
-
-        {% if user.is_authenticated %}
-            {% for member in event.members.all %}
+        <div class="row">
+            {% for event in events %}
+            <div class="col-md-4">
+                <div class="card card-body">
+                    <a name="{{ event.id }}"></a>
+                    <h2>{{ event.name }}</h2>
                     <div>
-                    <span class="badge badge-light">{{ member }}</span>
+                        <span class="badge {{ event.type.badgecolor }}">{{ event.type }}</span>{{ event.date }}</div>
+                        <hr>
+                    <div>                        
+                        <p>{{ event.description|linebreaksbr }}</p>
                     </div>
-            {% endfor %}
-        {% endif %}
-        
-    </li>
-    {% endfor %}
+                    <hr>
+                    <div>
+                    {% for join in event.members.all %}
+                       
+                    <span class="badge bg-light text-dark">{{ join }}</span>
+                    {% endfor %}
+                        </div>
+                    <div class="btn-group" role="group" aria-label="Osalasdfsdlistu">
 
-</ul>
+                        {% if event.members.all|length < event.max %}
+                             <!-- Evil bitlevel hacking, link is set to hidden, if user is joined to the event. Notice the "<a" -->
+                            <a {% for join in event.eventsjoined_set.all %}
+                                {% if join.person == request.user %}
+                                     hidden 
+                                {% endif %}
+                             {% endfor %} id="{{ event.id }}_joinbtn"class="btn btn-success" href="{% url 'joinevent' event.id  %}" type="button"><span class="glyphicon glyphicon-thumbs-up"> </span> Osallistu <span class="badge bg-secondary"><em>{{ event.members.all|length }}/{{ event.max }}</em></span></a>
+                        {% endif %}
+                        {% for join in event.members.all %}
+                            {% if join == request.user %}
+                                <a class="btn btn-danger" href="{% url 'cancelevent' event.id  %}" type="button"><span class="glyphicon glyphicon-thumbs-down"> </span> Peruuta<span class="badge bg-secondary"><em> {{ event.members.all|length }}/{{ event.max }}</em></span></a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+        <!--/row-->
+ </div>
 {% endblock %}
 
 

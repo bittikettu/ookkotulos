@@ -9,8 +9,8 @@ from django.utils import timezone
 
 class Person(AbstractUser):
     bio = models.TextField(max_length=500, blank=True)
-    events = models.ManyToManyField('Event', through='EventsJoined')
-    
+    events = models.ManyToManyField('Event', through='EventsJoined',blank=True,default=None)
+
     def __str__(self):
         self.username
         if len(self.first_name) == 0:
@@ -20,13 +20,15 @@ class Person(AbstractUser):
 
 class EventTypes(models.Model):
     name = models.CharField(max_length=128)
+    badgecolor = models.CharField(max_length=20,default="bg-success")
 
     def __str__(self):
         return self.name
 
 class Event(models.Model):
     name = models.CharField(max_length=128)
-    members = models.ManyToManyField(Person, through='EventsJoined')
+    creator = models.ForeignKey(Person,null=True, on_delete=models.SET_NULL,default=None, related_name='creator')
+    members = models.ManyToManyField(Person, through='EventsJoined',blank=True,default=None)
     type = models.ForeignKey(EventTypes, on_delete=models.CASCADE)
     max = models.SmallIntegerField()
     date = models.DateTimeField()
@@ -41,7 +43,7 @@ class Event(models.Model):
 class EventsJoined(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    date_joined = models.DateField()
+    date_joined = models.DateField(default=timezone.now)
     cancel = models.BooleanField(name='Peruutus', default=False)
     join = models.BooleanField(default=False)
     date_cancel = models.DateField(null=True, blank=True)

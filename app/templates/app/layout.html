@@ -2,51 +2,74 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }} - Tapahtumailmo 1.0</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <title>{{ title }} - My Django Application</title>
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap-grid.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap-utilities.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'app/icons/bootstrap-icons.css' %}"/>
     <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
 </head>
+  <body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'home' %}"><i class="bi bi-terminal-fill"> <strong>Tapahtumailmo 1.0</strong></i></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a href="/" class="navbar-brand">Tapahtumailmo 1.0</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="{% url 'home' %}">Etusivu</a></li>
-                    <li><a href="{% url 'events' %}">Tapahtumat</a></li>
-                    <li><a href="{% url 'about' %}">Sovelluksesta</a></li>
-                    <li><a href="{% url 'contact' %}">Tekij&auml;t</a></li>
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav me-auto mb-2 mb-md-0">
+        <!--<li class="nav-item active">
+          <a class="nav-link" href="{% url 'home' %}"><i class="bi bi-house-door"> Etusivu</i></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'about' %}"><i class="bi bi-stack"> Tapahtumat</i></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'contact' %}"><i class="bi bi-info-circle"> Info</i></a>
+        </li>-->
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'events' %}"><i class="bi bi-info-circle"> Tapahtumat</i></a>
+        </li>
+          {% if user.is_authenticated %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Toiminnot</a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="{% url 'addevent' %}">Uusi tapahtuma</a></li>
                     {% if user.is_authenticated == False %}
-                    <li><a href="{% url 'register' %}">Liity!</a></li>
+                    <li><a class="dropdown-item" href="{% url 'register' %}">Liity!</a></li>
                     {% endif %}
-                </ul>
-                {% include 'app/loginpartial.html' %}
-            </div>
-        </div>
-    </div>
 
-    <div class="container body-content">
+          </ul>
+        </li>
+          {% endif %}
+      </ul>
+        {% include 'app/loginpartial.html' %}
+    </div>
+  </div>
+</nav>
+      
+
+
+
+    <main role="main">
+        <div class="container-fluid min-vh-100 py-3">
 {% block content %}{% endblock %}
-        <hr/>
-        <footer>
-            <p>&copy; 2021 - Tapahtumailmo 1.0</p>
+            </div>
+                <footer align="center">
+            <p>&copy; Tapilmo</p>
         </footer>
-    </div>
+    </main>
 
-    <script src="{% static 'app/scripts/jquery-1.10.2.js' %}"></script>
-    <script src="{% static 'app/scripts/bootstrap.js' %}"></script>
+    <script src="{% static 'app/scripts/jquery-3.5.1.min.js' %}"></script>
+    <script src="{% static 'app/scripts/bootstrap.min.js' %}"></script>
+
+    <script src="{% static 'app/scripts/popper.min.js' %}"></script>
     <script src="{% static 'app/scripts/respond.js' %}"></script>
+
 {% block scripts %}{% endblock %}
 
 </body>

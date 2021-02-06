@@ -9,14 +9,14 @@ class EventsInline(admin.StackedInline):
     model = EventsJoined
     extra = 1
 
-class PersonAdmin(admin.ModelAdmin):
-    inlines = (EventsInline,)
+#class PersonAdmin(UserAdmin):
+#    inlines = (EventsInline,)
 
 class EventAdmin(admin.ModelAdmin):
     inlines = (EventsInline,)
 
 admin.site.register(LogEntry)
-admin.site.register(Person, PersonAdmin)
+admin.site.register(Person, UserAdmin)
 admin.site.register(EventTypes)
 admin.site.register(EventsJoined)
 admin.site.register(Event,EventAdmin)

@@ -1,16 +1,18 @@
+{% load static %}
 {% if user.is_authenticated %}
-<form id="logoutForm" action="/logout/" method="post" class="navbar-right">
+<form id="logoutForm" action="/logout/" method="post" class="form-inline my-2 my-lg-0">
     {% csrf_token %}
-    <ul class="nav navbar-nav navbar-right">
-        <li><span class="navbar-brand">{{ user }}</span></li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Kirjaudu ulos</a></li>
-    </ul>
+
+        <!--<li><span class="navbar-brand">Hello {{ user.username }}!</span></li>-->
+        <a class="btn btn-danger my-2 my-sm-0" href="javascript:document.getElementById('logoutForm').submit()" role="button"><i class="bi bi-person-circle" width="32" height="32" style=" color: inherit;"></i></a>
+
+       
+
 </form>
 
 {% else %}
-
-<ul class="nav navbar-nav navbar-right">
-    <li><a href="{% url 'login' %}">Kirjaudu</a></li>
-</ul>
+        <form class="form-inline my-2 my-lg-0">
+          <a class="btn btn-success my-2 my-sm-0" href="{% url 'login' %}" role="button"><i class="bi bi-person-circle" width="32" height="32" style="color: inherit;"></i></a>
+        </form>
 
 {% endif %}
