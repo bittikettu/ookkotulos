@@ -142,9 +142,9 @@ def register(response):
     if response.method == "POST":
         form = RegisterForm(response.POST)
         if form.is_valid():
-            u = form.save(commit=False)
+            u = form.save(commit=True)
             #permission = Permission.objects.get(name='Can view poll')
-            u.user_permissions.add(Permission.objects.get(name='Can add group'))
+            #u.user_permissions.add(Permission.objects.get(name='Can add group'))
             return redirect("/login")
         else:
             return redirect("/register")
