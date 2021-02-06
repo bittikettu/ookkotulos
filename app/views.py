@@ -9,6 +9,7 @@ from .models import *
 from .forms import *
 from django.contrib.admin.models import LogEntry, ADDITION, CHANGE
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import Permission
 
 def home(request):
     """Renders the home page."""
@@ -141,7 +142,9 @@ def register(response):
     if response.method == "POST":
         form = RegisterForm(response.POST)
         if form.is_valid():
-            form.save()
+            u = form.save(commit=False)
+            #permission = Permission.objects.get(name='Can view poll')
+            u.user_permissions.add(Permission.objects.get(name='Can add group'))
             return redirect("/login")
         else:
             return redirect("/register")
