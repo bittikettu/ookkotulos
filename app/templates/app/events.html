@@ -48,6 +48,17 @@
                                     <a class="btn btn-danger" href="{% url 'cancelevent' event.id  %}" type="button"><span class="glyphicon glyphicon-thumbs-down"> </span> Peruuta<span class="badge bg-secondary"><em> {{ event.members.all|length }}/{{ event.max }}</em></span></a>
                                 {% endif %}
                             {% endfor %}
+
+                            {% if event.creator == request.user %}
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"> Valinnat </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <li><a class="dropdown-item" href="#">Muokkaa (todo)</a></li>
+                                        <li><a class="dropdown-item alert-link" href="#">Poista (todo)</a></li>
+                                    </ul>
+                                </div>
+                            {% endif %}
+
                         </div>
                     {% endif %}
                 </div>
