@@ -23,7 +23,7 @@
                         <span class="badge {{ event.type.badgecolor }}">{{ event.type }}</span>{{ event.date }}</div>
                         <hr>
                     <div>                        
-                        <p>{{ event.description|linebreaksbr }}</p>
+                        <p class="font-monospace">{{ event.description|linebreaksbr }}</p>
                     </div>
                     <hr>
                     <div>
@@ -41,7 +41,7 @@
                                     {% if join.person == request.user %}
                                         hidden 
                                     {% endif %}
-                                {% endfor %} id="{{ event.id }}_joinbtn"class="btn btn-success" href="{% url 'joinevent' event.id  %}" type="button"><span class="glyphicon glyphicon-thumbs-up"> </span> Osallistu <span class="badge bg-secondary"><em>{{ event.members.all|length }}/{{ event.max }}</em></span></a>
+                                {% endfor %} id="{{ event.id }}_joinbtn" class="btn btn-success" href="{% url 'joinevent' event.id  %}" type="button"><span class="glyphicon glyphicon-thumbs-up"> </span> Osallistu <span class="badge bg-secondary"><em>{{ event.members.all|length }}/{{ event.max }}</em></span></a>
                             {% endif %}
                             {% for join in event.members.all %}
                                 {% if join == request.user %}
