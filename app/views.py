@@ -173,8 +173,8 @@ def addevent(response):
         response, 
         "app/addevent.html", 
         {
-            'title':'Liity',
-            'message':'Liity tapahtumailmoon',
+            'title':'Luo',
+            'message':'Luo uusi tapahtuma ja kutsu kaverit mukaan.',
             "form":form
         }
     )
