@@ -62,8 +62,8 @@ def events(request):
             'title':'Tapahtumat',
             'message':'Tulevat tapahtumat',
             'events': Event.objects.all().filter(date__gte=timezone.now()),
-            'pastevents': Event.objects.all().filter(date__lte=timezone.now()),
-            'eventsjoined': EventsJoined.objects.all().filter(person=request.user,join=True),
+            #'pastevents': Event.objects.all().filter(date__lte=timezone.now()),
+            #'eventsjoined': EventsJoined.objects.all().filter(join=True, event__date__gte=timezone.now()),
         }
     )
     except:
@@ -75,7 +75,7 @@ def events(request):
                 'year':2021,
                 'title':'Tapahtumat',
                 'message':'Tulevat tapahtumat',
-                'events':Event.objects.all(),
+                'events': Event.objects.all().filter(date__gte=timezone.now()),
             }
         )
 
@@ -83,26 +83,10 @@ def cancelevent(request, pk):
     eventti = Event.objects.get(id=pk)
     person = request.user #Person.objects.get(user=request.user)
     joininfo = EventsJoined.objects.get(event=eventti,person=person)
-    print(joininfo)
     joininfo.delete()
-    #joininfo.cancelevent()
-    #print(eventti)
-    
-    #print(person)
-    #joininfo.save()
+
     return redirect('events')
-    #return render(
-    #    request,
-    #    'app/events.html',
-    #    {
-    #        'title':'Tapahtumat',
-    #        'message':'Tulevat tapahtumat',
-    #        'events':Event.objects.all().filter(date__gte=timezone.now()),
-    #        'pastevents':Event.objects.all().filter(date__lte=timezone.now()),
-    #        'eventsjoined':EventsJoined.objects.all().filter(person=person),
-    #        'year':2021,
-    #    }
-    #)
+
 
 def joinevent(request, pk):
     eventti = Event.objects.get(id=pk)
@@ -126,17 +110,7 @@ def joinevent(request, pk):
      #           action_flag=ADDITION if create else CHANGE)
 
     return redirect('events')
-    #return render(
-    #    request,
-    #    'app/events.html',
-    #    {
-    #        'title':'Tapahtumat',
-    #        'message':'Tulevat tapahtumat',
-    #        'events':Event.objects.all().filter(date__gte=timezone.now()),
-    #        'pastevents':Event.objects.all().filter(date__lte=timezone.now()),
-    #        'eventsjoined': person.event_set.all() #EventsJoined.objects.all().filter(person=person),
-    #    }
-    #)
+
 
 def register(response):
     if response.method == "POST":

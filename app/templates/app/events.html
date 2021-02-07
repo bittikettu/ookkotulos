@@ -23,42 +23,39 @@
                         <span class="badge {{ event.type.badgecolor }}">{{ event.type }}</span>{{ event.date }}</div>
                         <hr>
                     <div>                        
-                        <p class="font-monospace">{{ event.description|linebreaksbr }}</p>
+                        <p class="font-monospace">
+                        {{ event.description|linebreaksbr }}
+                        </p>
                     </div>
                     <hr>
                     <div>
-                    {% for join in event.members.all %}
-                       
-                    <span class="badge bg-light text-dark">{{ join }}</span>
-                    {% endfor %}
-                        </div>
+                        {% for join in event.eventsjoined_set.all %}
+                            {% if join.join == True %}
+                                <span class="badge bg-light text-dark">{{ join.person }}</span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                     {% if user.is_authenticated == True %}
                         <div class="btn-group" role="group" aria-label="Osalasdfsdlistu">
 
-                            {% if event.members.all|length < event.max %}
+                            {% if event.eventsjoined_set.join.all|length < event.max %}
                                 <!-- Evil bitlevel hacking, link is set to hidden, if user is joined to the event. Notice the "<a" -->
                                 <a {% for join in event.eventsjoined_set.all %}
-                                    {% if join.person == request.user %}
+                                    {% if join.person == request.user and join.join == True %}
                                         hidden 
                                     {% endif %}
                                 {% endfor %} id="{{ event.id }}_joinbtn" class="btn btn-success" href="{% url 'joinevent' event.id  %}" type="button"><span class="glyphicon glyphicon-thumbs-up"> </span> Osallistu <span class="badge bg-secondary"><em>{{ event.members.all|length }}/{{ event.max }}</em></span></a>
                             {% endif %}
-                            {% for join in event.members.all %}
-                                {% if join == request.user %}
-                                    <a class="btn btn-danger" href="{% url 'cancelevent' event.id  %}" type="button"><span class="glyphicon glyphicon-thumbs-down"> </span> Peruuta<span class="badge bg-secondary"><em> {{ event.members.all|length }}/{{ event.max }}</em></span></a>
+                            {% for join in event.eventsjoined_set.all %}
+                                {% if join.person == request.user and join.join == True %}
+                                    <a class="btn btn-warning" href="{% url 'cancelevent' event.id  %}" type="button"><span class="glyphicon glyphicon-thumbs-down"> </span> Peruuta<span class="badge bg-secondary"><em> {{ event.members.all|length }}/{{ event.max }}</em></span></a>
                                 {% endif %}
                             {% endfor %}
 
                             {% if event.creator == request.user %}
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"> Valinnat </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <li><a class="dropdown-item" href="#">Muokkaa (todo)</a></li>
-                                        <li><a class="dropdown-item alert-link" href="#">Poista (todo)</a></li>
-                                    </ul>
-                                </div>
-                            {% endif %}
+                                    <a class="btn btn-dark" href="{% url 'cancelevent' event.id  %}" type="button"><span class="glyphicon glyphicon-thumbs-down"> </span> Muokkaa</a>
 
+                            {% endif %}
                         </div>
                     {% endif %}
                 </div>

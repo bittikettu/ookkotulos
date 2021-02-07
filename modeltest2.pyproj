@@ -4,13 +4,13 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <Name>modeltest2</Name>
     <RootNamespace>modeltest2</RootNamespace>
-    <InterpreterId>MSBuild|env1|$(MSBuildProjectFullPath)</InterpreterId>
+    <SuppressEnvironmentCreationPrompt>True</SuppressEnvironmentCreationPrompt>
     <TestFramework>Pytest</TestFramework>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>0bc5a77f-ee95-4bef-baec-16dce36ff866</ProjectGuid>
+    <ProjectGuid>7dbf5c40-ef1c-4131-b4ea-54c1f034b198</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <ProjectTypeGuids>{5F0BE9CA-D677-4A4D-8806-6076C0FAAD37};{349c5851-65df-11da-9384-00065b846f21};{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
     <StartupFile>manage.py</StartupFile>
@@ -32,11 +32,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="app\admin.py" />
     <Compile Include="app\forms.py" />
     <Compile Include="app\models.py" />
-    <Compile Include="app\admin.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="app\tests.py" />
     <Compile Include="app\views.py" />
     <Compile Include="app\__init__.py" />
@@ -60,8 +58,53 @@
     <Folder Include="modeltest2\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\static\app\content\bootstrap-grid.css" />
+    <Content Include="app\static\app\content\bootstrap-grid.css.map" />
+    <Content Include="app\static\app\content\bootstrap-grid.min.css" />
+    <Content Include="app\static\app\content\bootstrap-grid.min.css.map" />
+    <Content Include="app\static\app\content\bootstrap-grid.rtl.css" />
+    <Content Include="app\static\app\content\bootstrap-grid.rtl.css.map" />
+    <Content Include="app\static\app\content\bootstrap-grid.rtl.min.css" />
+    <Content Include="app\static\app\content\bootstrap-grid.rtl.min.css.map" />
+    <Content Include="app\static\app\content\bootstrap-reboot.css" />
+    <Content Include="app\static\app\content\bootstrap-reboot.css.map" />
+    <Content Include="app\static\app\content\bootstrap-reboot.min.css" />
+    <Content Include="app\static\app\content\bootstrap-reboot.min.css.map" />
+    <Content Include="app\static\app\content\bootstrap-reboot.rtl.css" />
+    <Content Include="app\static\app\content\bootstrap-reboot.rtl.css.map" />
+    <Content Include="app\static\app\content\bootstrap-reboot.rtl.min.css" />
+    <Content Include="app\static\app\content\bootstrap-reboot.rtl.min.css.map" />
+    <Content Include="app\static\app\content\bootstrap-utilities.css" />
+    <Content Include="app\static\app\content\bootstrap-utilities.css.map" />
+    <Content Include="app\static\app\content\bootstrap-utilities.min.css" />
+    <Content Include="app\static\app\content\bootstrap-utilities.min.css.map" />
+    <Content Include="app\static\app\content\bootstrap-utilities.rtl.css" />
+    <Content Include="app\static\app\content\bootstrap-utilities.rtl.css.map" />
+    <Content Include="app\static\app\content\bootstrap-utilities.rtl.min.css" />
+    <Content Include="app\static\app\content\bootstrap-utilities.rtl.min.css.map" />
+    <Content Include="app\static\app\content\bootstrap.css.map" />
+    <Content Include="app\static\app\content\bootstrap.min.css.map" />
+    <Content Include="app\static\app\content\bootstrap.rtl.css" />
+    <Content Include="app\static\app\content\bootstrap.rtl.css.map" />
+    <Content Include="app\static\app\content\bootstrap.rtl.min.css" />
+    <Content Include="app\static\app\content\bootstrap.rtl.min.css.map" />
+    <Content Include="app\static\app\scripts\bootstrap.bundle.js" />
+    <Content Include="app\static\app\scripts\bootstrap.bundle.js.map" />
+    <Content Include="app\static\app\scripts\bootstrap.bundle.min.js" />
+    <Content Include="app\static\app\scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="app\static\app\scripts\bootstrap.esm.js" />
+    <Content Include="app\static\app\scripts\bootstrap.esm.js.map" />
+    <Content Include="app\static\app\scripts\bootstrap.esm.min.js" />
+    <Content Include="app\static\app\scripts\bootstrap.esm.min.js.map" />
+    <Content Include="app\static\app\scripts\bootstrap.js.map" />
+    <Content Include="app\static\app\scripts\bootstrap.min.js.map" />
+    <Content Include="app\static\app\scripts\jquery-3.5.1.min.js" />
+    <Content Include="app\static\app\scripts\jquery-3.5.1.slim.min.js" />
+    <Content Include="app\static\app\scripts\popper.min.js" />
+    <Content Include="app\templates\app\addevent.html" />
+    <Content Include="app\templates\app\events.html" />
+    <Content Include="app\templates\app\register.html" />
     <Content Include="requirements.txt" />
-    <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />
     <Content Include="app\static\app\content\bootstrap.min.css" />
     <Content Include="app\static\app\content\site.css" />
@@ -95,26 +138,6 @@
     <None Include="readme.html">
       <SubType>WebBrowser</SubType>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Interpreter Include="env1\">
-      <Id>env1</Id>
-      <Version>3.8</Version>
-      <Description>env1 (Python 3.8 (64-bit))</Description>
-      <InterpreterPath>Scripts\python.exe</InterpreterPath>
-      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
-      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
-      <Architecture>X64</Architecture>
-    </Interpreter>
-    <Interpreter Include="env333\">
-      <Id>env333</Id>
-      <Version>3.8</Version>
-      <Description>env333 (Python 3.8 (64-bit))</Description>
-      <InterpreterPath>Scripts\python.exe</InterpreterPath>
-      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
-      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
-      <Architecture>X64</Architecture>
-    </Interpreter>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.Django.targets" />
   <!-- Specify pre- and post-build commands in the BeforeBuild and 

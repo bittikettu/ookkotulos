@@ -38,9 +38,6 @@ class RegisterForm(UserCreationForm):
         self.fields['password2'].widget.attrs['class'] = 'form-control'
 
 class AddeventForm(ModelForm):
-   
-
-
     class Meta:
         model = Event
         fields = ["name", "type", "description","max","date"] #'__all__'#["username", "email", "password1", "password2"]
