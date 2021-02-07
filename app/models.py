@@ -8,8 +8,11 @@ import datetime
 from django.utils import timezone
 
 class Person(AbstractUser):
-    bio = models.TextField(max_length=500, blank=True)
+    bio = models.TextField(max_length=500, blank=True, default=None,null=True)
     events = models.ManyToManyField('Event', through='EventsJoined',blank=True,default=None)
+
+    class Meta:
+        permissions = [('can_eat_pizzas', 'Can eat pizzas')]
 
     def __str__(self):
         self.username
