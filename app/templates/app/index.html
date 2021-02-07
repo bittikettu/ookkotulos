@@ -13,7 +13,7 @@
 
       <div class="container">
         <!-- Example row of columns -->
-        <div class="row">
+        <!--<div class="row">
           <div class="col-md-4">
             <h2>Liity!</h2>
             <p>Liity nyt!</p>
@@ -30,8 +30,44 @@
             <p><a class="btn btn-secondary" href="{% url 'events' %}" role="button">Osallistu &raquo;</a></p>
           </div>
         </div>
-        <hr>
-
+        <hr>-->
+          <div class="row">
+                    <div class="col-md-4">
+                    <div class="card text-white bg-success overflow-hidden">
+                        <div class="card-body bg-success">
+                            <div class="rotate">
+                                <i class="fa fa-user fa-5x"></i>
+                            </div>
+                            <h6 class="text-uppercase">K&auml;ytt&auml;ji&auml;</h6>
+                            <h1 class="display-1">{{ users.all|length }}</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-white bg-danger overflow-hidden">
+                        <div class="card-body bg-danger">
+                            <div class="rotate">
+                                <i class="fa fa-list fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase">Tapahtumia</h6>
+                            <h1 class="display-1">{{ events_joinable.all|length }} / {{ events.all|length }}</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-white card-info overflow-hidden">
+                        <div class="card-body bg-info">
+                            <div class="rotate">
+                                <i class="fa fa-twitter fa-5x"></i>
+                            </div>
+                            <h6 class="text-uppercase">Osallistumisia</h6>
+                            <h1 class="display-1">{{ joins|length }}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
       </div> <!-- /container -->
+
+
 
 {% endblock %}

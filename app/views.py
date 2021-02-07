@@ -20,6 +20,10 @@ def home(request):
         {
             'title':'Etusivu',
             'year':2021,
+            'users':Person.objects.all(),
+            'events':Event.objects.all(),
+            'events_joinable':Event.objects.all().filter(date__gte=timezone.now()),
+            'joins': EventsJoined.objects.all(),
         }
     )
 
