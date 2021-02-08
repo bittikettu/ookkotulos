@@ -20,6 +20,16 @@ class BootstrapAuthenticationForm(AuthenticationForm):
                                    'class': 'form-control',
                                    'placeholder':'Salasana'}))
 
+class CreateGroup(forms.Form):
+    groupname = forms.CharField(label='Ryhmän nimi', max_length=50,widget=forms.TextInput({
+                                   'class': 'form-control',
+                                   'placeholder': 'Porukan nimi'}))
+
+class JoinGroup(forms.Form):
+    groupname = forms.CharField(label='Kutsukoodi', max_length=50,widget=forms.TextInput({
+                                   'class': 'form-control',
+                                   'placeholder': 'Kutsukoodi'}))
+
 
 class RegisterForm(UserCreationForm):
     class Meta:
@@ -40,7 +50,8 @@ class RegisterForm(UserCreationForm):
 class AddeventForm(ModelForm):
     class Meta:
         model = Event
-        fields = ["name", "type", "description","max","date"] #'__all__'#["username", "email", "password1", "password2"]
+        fields = ["name", "type", "description","max","date","group"] #'__all__'#["username", "email", "password1", "password2"]
+
         #widgets = {
         #    'username': forms.TextInput(attrs={'class': 'form-control','id':'formGroupExampleInput','placeholder':'Käyttäjätunnus'}),
         #    'email': forms.TextInput(attrs={'class': 'form-control','id':'formGroupExampleInput','placeholder':'Sähköposti'}),
@@ -48,9 +59,12 @@ class AddeventForm(ModelForm):
         #    'password2': forms.PasswordInput(),
         #}
     def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user')
+        print(user)
         super(AddeventForm, self).__init__(*args, **kwargs)
         self.fields['name'].widget.attrs['class'] = 'form-control'
         self.fields['type'].widget.attrs['class'] = 'form-control'
+        self.fields['group'].widget.attrs['class'] = 'form-control'
         self.fields['description'].widget.attrs['class'] = 'form-control'
         self.fields['max'].widget.attrs['class'] = 'form-control'
         #self.fields['date'].widget.attrs['id'] = 'datetime-local'
@@ -59,5 +73,9 @@ class AddeventForm(ModelForm):
                                    'name': 'date',
                                    'type' : 'datetime-local',
                                    'id':'datetime-local'})
+        if user:
+            groups = Group.objects.filter(user__id__in=user.groups.all())
+            self.fields['group'].queryset = groups
+            #print(groups)
         #self.fields['date'].widget.attrs['type'] = 'datetime-local'
 

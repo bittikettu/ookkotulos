@@ -10,6 +10,10 @@ from .forms import *
 from django.contrib.admin.models import LogEntry, ADDITION, CHANGE
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import Permission
+from django.contrib.auth.models import Group
+import hashlib
+
+
 
 def home(request):
     """Renders the home page."""
@@ -65,7 +69,8 @@ def events(request):
             'year':2021,
             'title':'Tapahtumat',
             'message':'Tulevat tapahtumat',
-            'events': Event.objects.all().filter(date__gte=timezone.now()),
+            #'events': Event.objects.all().filter(date__gte=timezone.now()),
+            'events':Event.objects.all().filter(group__id__in=person.groups.all(),date__gte=timezone.now()).order_by('date'),
             #'pastevents': Event.objects.all().filter(date__lte=timezone.now()),
             #'eventsjoined': EventsJoined.objects.all().filter(join=True, event__date__gte=timezone.now()),
         }
@@ -79,7 +84,8 @@ def events(request):
                 'year':2021,
                 'title':'Tapahtumat',
                 'message':'Tulevat tapahtumat',
-                'events': Event.objects.all().filter(date__gte=timezone.now()),
+                #'events': Event.objects.all().filter(date__gte=timezone.now()),
+                'events':Event.objects.all().filter(group__id__in=person.groups.all(),date__gte=timezone.now()).order_by('date'),
             }
         )
 
@@ -145,7 +151,7 @@ def register(response):
 
 def addevent(response):
     if response.method == "POST":
-        form = AddeventForm(response.POST)
+        form = AddeventForm(response.POST,user=response.user)
         if form.is_valid():
             event = form.save(commit=False)
             event.creator = response.user
@@ -154,7 +160,7 @@ def addevent(response):
 
         return redirect("/events")
     else:
-        form = AddeventForm()
+        form = AddeventForm(user=response.user)
     return render(
         response, 
         "app/addevent.html", 
@@ -163,4 +169,79 @@ def addevent(response):
             'message':'Luo uusi tapahtuma ja kutsu kaverit mukaan.',
             "form":form
         }
+    )
+
+def creategroup(response):
+    if response.method == "POST":
+        form = CreateGroup(response.POST)
+        if form.is_valid():
+            g1 = Group.objects.create(name=form.cleaned_data['groupname'])
+            g1.user_set.add(response.user)
+
+        return redirect("/events")
+    else:
+        form = CreateGroup()
+    return render(
+        response, 
+        "app/creategroup.html", 
+        {
+            'title':'Tee uusi porukka',
+            'message':'Luo uusi porukka kavereitasi varten',
+            "form":form
+        }
+    )
+
+#def md5_string(value):
+#    return hashlib.md5(str(value).encode()).hexdigest()
+
+def md5_string(value):
+    return hashlib.md5(value.encode()).hexdigest()
+
+def joingroup(response):
+    if response.method == "POST": 
+        form = JoinGroup(response.POST)
+        if form.is_valid():
+            for event in Event.objects.all():
+                try:
+                    if md5_string(event.group.name) == form.cleaned_data['groupname']:
+                        try:
+                            g1 = event.group
+                            g1.user_set.add(response.user)
+                        except:
+                            print("User was on this group")
+                    else:
+                        print("Group not found")
+                except:
+                    pass
+        return redirect("/events")
+    else:
+        form = JoinGroup()
+    return render(
+        response, 
+        "app/joingroup.html", 
+        {
+            'title':'Tee uusi porukka',
+            'message':'Luo uusi porukka kavereitasi varten',
+            "form":form
+        }
+    )
+
+def user(request):
+    """Renders the about page."""
+    assert isinstance(request, HttpRequest)
+
+    person = request.user #Person.objects.get(user=request.user)
+    return render(
+    request,
+    'app/user.html',
+    {
+        'year':2021,
+        'title':'Käyttäjän tiedot',
+        'message':'Käyttäjän tiedot',
+        'groups': person,
+        'events':Event.objects.filter(group__id__in=person.groups.all()).order_by('date'),
+        'eventsjoined' : Event.objects.filter(members=person).order_by('date'),
+        #'pastevents': Event.objects.all().filter(date__lte=timezone.now()),
+        #'eventsjoined': EventsJoined.objects.all().filter(join=True, event__date__gte=timezone.now()),
+    }
     )

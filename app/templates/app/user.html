@@ -1,0 +1,70 @@
+{% extends "app/layout.html" %}
+{% load suodattimet %}
+{% block content %}
+{% if user.is_authenticated == True %}
+
+    <div class="container">
+        <h2>{{ title }}</h2>
+        <h3>{{ message }}</h3>
+
+        <h1>{{ request.user }}</h1>
+        <hr />
+        <h5>Tapahtumat joissa mukana</h5>
+        <ul>
+            {% for event in eventsjoined %}
+            <li>{{ event.name }}: {{ event.date }}</li>
+            {% endfor %}
+        </ul>
+
+        <hr />
+        <h5>Porukat joissa mukana</h5>
+        {% for group in request.user.groups.all %}
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">{{ group }}</h4>
+                <form>
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-2 col-form-label">Kutsukoodi</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ group.name|md5 }}">
+                        </div>
+                    </div>
+                </form>
+                <h5>Tyypit</h5>
+                <ul class="list-group list-group-flush">
+                    {% for user in group.user_set.all %}
+                    <li class="list-group-item">{{ user }}</li>
+                    {% endfor %}
+                </ul>
+
+                <ul>
+                    {% for event in group.events_set.all %}
+                    <li>{{ event }}</li>
+                    {% endfor %}
+                </ul>
+
+
+            </div>
+        </div>
+        {% endfor %}
+
+        {% regroup events|dictsort:"group.name" by group as event_list %}
+
+        <ul>
+            {% for group in event_list %}
+            <li>
+                {{ group.grouper }}
+                <ul>
+                    {% for event in group.list %}
+                    <li>{{ event.name }}: {{ event.date }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+
+
+    </div>
+
+{% endif %}
+{% endblock %}

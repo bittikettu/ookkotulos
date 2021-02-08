@@ -6,7 +6,7 @@
       <div class="jumbotron">
         <div class="container">
           <h1 class="display-3">Tervetuloa tapahtumien ihmeelliseen maailmaan</h1>
-          <p>Tapahtumiin osallistuminen ja niiden luominen ei ole koskaan ollut niin helppoa, kuin se nyt on.</p>
+          <p>Tapahtumiin osallistuminen ja niiden luominen ei ole koskaan ollut niin helppoa, kuin se nyt on. Luo tunnukset ja oma porukka, jaa kutsulinkki, joka on asetukset-valikossa.</p>
           <p><a class="btn btn-primary btn-lg" href="{% url 'register' %}" role="button">Liity! &raquo;</a></p>
         </div>
       </div>
@@ -66,8 +66,23 @@
                     </div>
                 </div>
             </div>
+    
+
       </div> <!-- /container -->
+<br />
 
-
-
+  <div class="container">
+      <h3>Kehitysuutiset</h3>
+      <div class="list-group">
+          <span class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">Porukoiden luominen ja kutsulinkit</h5>
+              <small>HOT!</small>
+            </div>
+            <p class="mb-1">Nyt on mahdollista luoda porukoita eri tarpeisiin ja jokaiselle porukalle tapahtumia. Kutsukoodi voidaan antaa uusille tyypeille. Jokaisen porukan omat tapahtumat ovat vain n&auml;kyviss&auml;.<br />
+              Kutsulinkit ovat asetusvalikossa. <a href="{% url 'user' %}" >Asetukset</a></p>
+            <small>Juha</small>
+          </span>
+    </div>
+      </div>
 {% endblock %}

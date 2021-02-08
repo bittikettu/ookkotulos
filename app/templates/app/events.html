@@ -8,17 +8,22 @@
 
 {% if user.is_authenticated %}
 
-{% else %}
-<div class="alert alert-info" role="alert">
-  Tapahtumiin ilmoittautuminen vaatii kirjautumisen.
-</div>
-{% endif %}
-        <div class="row">
-            {% for event in events %}
-            <div class="col-md-4">
+        {% regroup events|dictsort:"group.name" by group as event_list %}
+   
+            {% for group in event_list %}
+           
+                <h3>{{ group.grouper }}</h3>
+ 
+                <div class="row">
+
+
+                {% for event in group.list %}
+
+                                <div class="col-md-4">
                 <div class="card card-body">
                     <a name="{{ event.id }}"></a>
                     <h2>{{ event.name }}</h2>
+                    
                     <div>
                         <span class="badge {{ event.type.badgecolor }}">{{ event.type }}</span>{{ event.date }}</div>
                         <hr>
@@ -60,9 +65,17 @@
                     {% endif %}
                 </div>
             </div>
-
+                    {% endfor %}
+            
+          </div>
+       <hr />
             {% endfor %}
-        </div>
+         
+    {% else %}
+<div class="alert alert-info" role="alert">
+  Tapahtumiin ilmoittautuminen vaatii kirjautumisen.
+</div>
+{% endif %}
         <!--/row-->
  </div>
 {% endblock %}

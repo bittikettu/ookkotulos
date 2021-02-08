@@ -3,7 +3,8 @@
 <form id="logoutForm" action="/logout/" method="post" class="form-inline my-2 my-lg-0">
     {% csrf_token %}
 
-        <!--<li><span class="navbar-brand">Hello {{ user.username }}!</span></li>-->
+        <span class="navbar-brand">Hello {{ user.username }}!</span>
+        <a class="btn btn-warning" href="{% url 'user' %}" type="button">Asetukset</a>
         <a class="btn btn-danger my-2 my-sm-0" href="javascript:document.getElementById('logoutForm').submit()" role="button"><i class="bi bi-person-circle" width="32" height="32" style=" color: inherit;"></i></a>
 
        

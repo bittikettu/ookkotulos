@@ -36,6 +36,7 @@ class Event(models.Model):
     max = models.SmallIntegerField()
     date = models.DateTimeField()
     description = models.TextField(max_length=500,default='')
+    group = models.ForeignKey(Group,null=True, on_delete=models.SET_NULL,default=None, related_name='group')
 
     class Meta:
         ordering = ['date']

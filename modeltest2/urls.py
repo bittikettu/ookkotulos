@@ -3,7 +3,7 @@ Definition of urls for modeltest2.
 """
 
 from datetime import datetime
-from django.urls import path
+from django.urls import path, re_path
 from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView
 from app import forms, views
@@ -16,6 +16,9 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('events/', views.events, name='events'),
     path("register/", views.register, name="register"),
+    path("creategroup/", views.creategroup, name="creategroup"),
+    path("joingroup/", views.joingroup, name="joingroup"),
+    path("user/", views.user, name="user"),
     path("addevent/", views.addevent, name="addevent"),
     path('cancelevent/<str:pk>/', views.cancelevent, name='cancelevent'),
     path('joinevent/<str:pk>/', views.joinevent, name='joinevent'),
