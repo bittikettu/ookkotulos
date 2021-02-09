@@ -14,6 +14,15 @@ from django.contrib.auth.models import Group
 import hashlib
 
 
+def extrashit(request):
+    addeventform = AddeventForm(user=request.user)
+    joingroupform = JoinGroup()
+    addgroupform = CreateGroup()
+    return {
+        "addeventform":addeventform,
+        "joingroupform":joingroupform,
+        "newroupform":addgroupform,
+        }
 
 def home(request):
     """Renders the home page."""
@@ -28,6 +37,7 @@ def home(request):
             'events':Event.objects.all(),
             'events_joinable':Event.objects.all().filter(date__gte=timezone.now()),
             'joins': EventsJoined.objects.all(),
+            'forms' : extrashit(request),
         }
     )
 
@@ -41,6 +51,7 @@ def contact(request):
             'title':'Tekijät',
             'message':'Tekijät',
             'year':2021,
+            'forms' : extrashit(request),
         }
     )
 
@@ -54,20 +65,53 @@ def about(request):
             'title':'Sovelluksesta',
             'message':'Tietoa sovelluksesta',
             'year':2021,
+            'forms' : extrashit(request),
         }
     )
+
+def addevent(response):
+    if response.method == "POST":
+        form = AddeventForm(response.POST,user=response.user)
+        if form.is_valid():
+            event = form.save(commit=False)
+            event.creator = response.user
+            event.save()
+            form.save_m2m()
+#next = request.POST.get('next', '/')
+        return redirect(response.POST.get('next', '/'))
+    else:
+        form = AddeventForm(user=response.user)
+    return render(
+        response, 
+        "app/addevent.html", 
+        {
+            'title':'Luo',
+            'message':'Luo uusi tapahtuma ja kutsu kaverit mukaan.',
+            "form":form
+        }
+    )
+
 
 def events(request):
     """Renders the about page."""
     assert isinstance(request, HttpRequest)
+    
+
     try:
         person = request.user #Person.objects.get(user=request.user)
+        #addeventform = AddeventForm(user=request.user)
+        ##joingroupform = JoinGroup()
+        #addgroupform = CreateGroup()
         return render(
         request,
         'app/events.html',
         {
             'year':2021,
-            'title':'Tapahtumat',
+            'title':'Tapahtumat modal',
+            #"addeventform":addeventform,
+            #"joingroupform":joingroupform,
+            #"newroupform":addgroupform,
+            'forms' : extrashit(request),
             'message':'Tulevat tapahtumat',
             #'events': Event.objects.all().filter(date__gte=timezone.now()),
             'events':Event.objects.all().filter(group__id__in=person.groups.all(),date__gte=timezone.now()).order_by('date'),
@@ -118,7 +162,7 @@ def joinevent(request, pk):
      #           object_id=jointoevent.id,
      #           object_repr=repr(jointoevent.title),
      #           action_flag=ADDITION if create else CHANGE)
-
+    #return redirect(request.POST.get('next', '/'))
     return redirect('events')
 
 
@@ -149,27 +193,7 @@ def register(response):
         }
     )
 
-def addevent(response):
-    if response.method == "POST":
-        form = AddeventForm(response.POST,user=response.user)
-        if form.is_valid():
-            event = form.save(commit=False)
-            event.creator = response.user
-            event.save()
-            form.save_m2m()
 
-        return redirect("/events")
-    else:
-        form = AddeventForm(user=response.user)
-    return render(
-        response, 
-        "app/addevent.html", 
-        {
-            'title':'Luo',
-            'message':'Luo uusi tapahtuma ja kutsu kaverit mukaan.',
-            "form":form
-        }
-    )
 
 def creategroup(response):
     if response.method == "POST":
@@ -177,8 +201,8 @@ def creategroup(response):
         if form.is_valid():
             g1 = Group.objects.create(name=form.cleaned_data['groupname'])
             g1.user_set.add(response.user)
-
-        return redirect("/events")
+        return redirect(response.POST.get('next', '/'))
+        #return redirect("/events")
     else:
         form = CreateGroup()
     return render(
@@ -213,7 +237,7 @@ def joingroup(response):
                         print("Group not found")
                 except:
                     pass
-        return redirect("/events")
+        return redirect(response.POST.get('next', '/')) #return redirect("/events")
     else:
         form = JoinGroup()
     return render(

@@ -13,6 +13,85 @@
     <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
 </head>
   <body>
+  
+
+  <div class="modal fade" id="createEventModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{ title }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+    <form method="POST"  action={% url 'addevent' %} class="form-group">
+        {% csrf_token %}
+        {{ forms.addeventform }}
+        
+              <div class="modal-footer">
+              <input type="hidden" name="next" value="{{ request.path }}">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Peruuta</button>
+        <button type="submit" class="btn btn-success">Luo tapahtuma</button>
+      </div>
+    </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+  <div class="modal fade" id="joinGroupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Liity porukkaan</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+    <form method="POST"  action={% url 'joingroup' %} class="form-group">
+        {% csrf_token %}
+        {{ forms.joingroupform }}
+        
+              <div class="modal-footer">
+               <input type="hidden" name="next" value="{{ request.path }}">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Peruuta</button>
+        <button type="submit" class="btn btn-success">Liity porukkaan</button>
+      </div>
+    </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+  <div class="modal fade" id="createGroupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Luo porukka</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+    <form method="POST"  action={% url 'creategroup' %} class="form-group">
+        {% csrf_token %}
+        {{ forms.newroupform }}
+        
+              <div class="modal-footer">
+               <input type="hidden" name="next" value="{{ request.path }}">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Peruuta</button>
+        <button type="submit" class="btn btn-success">Luo porukka</button>
+      </div>
+    </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
   <div class="container-fluid">
     <a class="navbar-brand" href="{% url 'home' %}"><i class="bi bi-terminal-fill"> <strong>Tapahtumailmo 1.0</strong></i></a>
@@ -41,9 +120,11 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Toiminnot</a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="{% url 'addevent' %}">Uusi tapahtuma</a></li>
-                    <li><a class="dropdown-item" href="{% url 'creategroup' %}">Uusi porukka</a></li>
-                    <li><a class="dropdown-item" href="{% url 'joingroup' %}">Liity porukkaan</a></li>
+
+                    <li data-bs-toggle="modal" data-bs-target="#createEventModal" data-bs-whatever="@mdo"><a class="dropdown-item" href="#">Uusi tapahtuma</a></li>
+                    <li data-bs-toggle="modal" data-bs-target="#createGroupModal" data-bs-whatever="@mdo"><a class="dropdown-item" href="#">Uusi porukka</a></li>
+                    <li data-bs-toggle="modal" data-bs-target="#joinGroupModal" data-bs-whatever="@mdo"><a class="dropdown-item" href="#">Liity porukkaan</a></li>
+
                     {% if user.is_authenticated == False %}
                     <li><a class="dropdown-item" href="{% url 'register' %}">Liity!</a></li>
                     {% endif %}
