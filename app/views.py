@@ -262,6 +262,7 @@ def user(request):
         'year':2021,
         'title':'Käyttäjän tiedot',
         'message':'Käyttäjän tiedot',
+        'forms' : extrashit(request),
         'groups': person,
         'events':Event.objects.filter(group__id__in=person.groups.all()).order_by('date'),
         'eventsjoined' : Event.objects.filter(members=person).order_by('date'),
