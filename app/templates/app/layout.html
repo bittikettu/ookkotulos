@@ -94,7 +94,7 @@
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'home' %}"><i class="bi bi-box-arrow-in-down-left"> <strong>OOKKOTULOS!</strong></i></a>
+    <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'app/icons/ookkotulos.svg' %}"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -106,10 +106,8 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'about' %}"><i class="bi bi-stack"> Tapahtumat</i></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'contact' %}"><i class="bi bi-info-circle"> Info</i></a>
         </li>-->
+
         <li class="nav-item">
           <a class="nav-link" href="{% url 'events' %}"><i class="bi bi-calendar-check"> Tapahtumat</i></a>
         </li>
@@ -118,7 +116,7 @@
                     {% endif %}
           {% if user.is_authenticated %}
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Toiminnot</a>
+          <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-menu-down"> Toiminnot</i></a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
                     <li data-bs-toggle="modal" data-bs-target="#createEventModal" data-bs-whatever="@mdo"><a class="dropdown-item" href="#"><i class="bi bi-calendar-plus"> Uusi tapahtuma</i></a></li>
@@ -130,6 +128,9 @@
                     {% endif %}
 
           </ul>
+        </li>
+                  <li class="nav-item">
+          <a class="nav-link" href="{% url 'contact' %}"><i class="bi bi-info-circle"> Info</i></a>
         </li>
           {% endif %}
       </ul>

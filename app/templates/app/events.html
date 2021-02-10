@@ -52,11 +52,11 @@
                                     {% if join.person == request.user and join.join == True %}
                                         hidden 
                                     {% endif %}
-                                {% endfor %} id="{{ event.id }}_joinbtn" class="btn btn-success" href="{% url 'joinevent' event.id  %}" type="button"><i class="bi bi-hand-thumbs-up">Oon tulos!</i> <span class="badge bg-secondary"><em>{{ event.members.all|length }}/{{ event.max }}</em></span></a>
+                                {% endfor %} id="{{ event.id }}_joinbtn" class="btn btn-success" href="{% url 'joinevent' event.id  %}" type="button" ><i class="bi bi-hand-thumbs-up"> Oon tulos!</i> <span class="badge bg-secondary"><em>{{ event.members.all|length }}/{{ event.max }}</em></span></a>
                             {% endif %}
                             {% for join in event.eventsjoined_set.all %}
                                 {% if join.person == request.user and join.join == True %}
-                                    <a class="btn btn-warning" href="{% url 'cancelevent' event.id  %}" type="button"><i class="bi bi-hand-thumbs-down"></i>En ookkaan!<span class="badge bg-secondary"><em> {{ event.members.all|length }}/{{ event.max }}</em></span></a>
+                                    <a class="btn btn-warning" href="{% url 'cancelevent' event.id  %}" type="button"><i class="bi bi-hand-thumbs-down"></i> En tuukkaan!<span class="badge bg-secondary"><em> {{ event.members.all|length }}/{{ event.max }}</em></span></a>
                                 {% endif %}
                             {% endfor %}
 

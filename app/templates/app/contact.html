@@ -1,24 +1,18 @@
 {% extends "app/layout.html" %}
-
+{% load static %}
 {% block content %}
 <div class="container">
-<h2>{{ title }}</h2>
-<h3>{{ message }}</h3>
 
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+      <main class="px-3">
+          <img data-src="holder.js/300x300" alt="300x300" src="{% static 'app/icons/ookkotulos.svg' %}" style="width: 600px; height: 300px;">
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
-
-
+    <h1>OOKKOTULOS!</h1>
+    <p class="lead">OOKKOTULOS! on yhden miehen tutkielma Djangon ihmeelliseen maailmaan.</p>
+    <p class="lead">
+      <a href="#" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Learn more</a>
+    </p>
+  </main>
 
 </div>
 
