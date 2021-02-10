@@ -110,7 +110,7 @@ def events(request):
         'app/events.html',
         {
             'year':2021,
-            'title':'Tapahtumat modal',
+            'title':'Tapahtumat',
             #"addeventform":addeventform,
             #"joingroupform":joingroupform,
             #"newroupform":addgroupform,

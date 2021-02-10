@@ -1,4 +1,4 @@
 staticfiles/*
 .vs/*
 .vs
-*..pyc
+*.pyc
