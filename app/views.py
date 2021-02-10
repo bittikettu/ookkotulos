@@ -15,14 +15,17 @@ import hashlib
 
 
 def extrashit(request):
-    addeventform = AddeventForm(user=request.user)
-    joingroupform = JoinGroup()
-    addgroupform = CreateGroup()
-    return {
-        "addeventform":addeventform,
-        "joingroupform":joingroupform,
-        "newroupform":addgroupform,
-        }
+    if(request.user):
+        addeventform = AddeventForm(user=request.user)
+        joingroupform = JoinGroup()
+        addgroupform = CreateGroup()
+        return {
+            "addeventform":addeventform,
+            "joingroupform":joingroupform,
+            "newroupform":addgroupform,
+            }
+    else:
+        return {}
 
 def home(request):
     """Renders the home page."""

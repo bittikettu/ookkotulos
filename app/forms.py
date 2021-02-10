@@ -75,11 +75,14 @@ class AddeventForm(ModelForm):
                                    'id':'datetime-local'})
         if user:
             #print(user.username)
-            userq = Person.objects.get(username=user.username)
-            #print(Group.objects.all())
-            #print(user.groups.all())
-            #groups = Group.objects.all().filter(user__id__in=userq.all())
-            self.fields['group'].queryset = userq.groups.all()
-            print(self.fields['group'].queryset)
+            try:
+                userq = Person.objects.get(username=user.username)
+                #print(Group.objects.all())
+                #print(user.groups.all())
+                #groups = Group.objects.all().filter(user__id__in=userq.all())
+                self.fields['group'].queryset = userq.groups.all()
+                print(self.fields['group'].queryset)
+            except:
+                pass
         #self.fields['date'].widget.attrs['type'] = 'datetime-local'
 
