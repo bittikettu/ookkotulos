@@ -111,7 +111,7 @@
           <a class="nav-link" href="{% url 'contact' %}"><i class="bi bi-info-circle"> Info</i></a>
         </li>-->
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'events' %}"><i class="bi bi-info-circle"> Tapahtumat</i></a>
+          <a class="nav-link" href="{% url 'events' %}"><i class="bi bi-calendar-check"> Tapahtumat</i></a>
         </li>
                             {% if user.is_authenticated == False %}
                     <li><a class="nav-link" href="{% url 'register' %}">Liity!</a></li>
@@ -121,9 +121,9 @@
           <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Toiminnot</a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                    <li data-bs-toggle="modal" data-bs-target="#createEventModal" data-bs-whatever="@mdo"><a class="dropdown-item" href="#">Uusi tapahtuma</a></li>
-                    <li data-bs-toggle="modal" data-bs-target="#createGroupModal" data-bs-whatever="@mdo"><a class="dropdown-item" href="#">Uusi porukka</a></li>
-                    <li data-bs-toggle="modal" data-bs-target="#joinGroupModal" data-bs-whatever="@mdo"><a class="dropdown-item" href="#">Liity porukkaan</a></li>
+                    <li data-bs-toggle="modal" data-bs-target="#createEventModal" data-bs-whatever="@mdo"><a class="dropdown-item" href="#"><i class="bi bi-calendar-plus"> Uusi tapahtuma</i></a></li>
+                    <li data-bs-toggle="modal" data-bs-target="#createGroupModal" data-bs-whatever="@mdo"><a class="dropdown-item" href="#"><i class="bi bi-person-plus"></i> Uusi porukka</a></li>
+                    <li data-bs-toggle="modal" data-bs-target="#joinGroupModal" data-bs-whatever="@mdo"><a class="dropdown-item" href="#"><i class="bi bi-people"></i> Liity porukkaan</a></li>
 
                     {% if user.is_authenticated == False %}
                     <li><a class="dropdown-item" href="{% url 'register' %}">Liity!</a></li>
