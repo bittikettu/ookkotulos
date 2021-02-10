@@ -222,14 +222,18 @@ def md5_string(value):
     return hashlib.md5(value.encode()).hexdigest()
 
 def joingroup(response):
-    if response.method == "POST": 
+    if response.method == "POST":
+
         form = JoinGroup(response.POST)
         if form.is_valid():
-            for event in Event.objects.all():
+            for group in Group.objects.all():
+
                 try:
-                    if md5_string(event.group.name) == form.cleaned_data['groupname']:
+                    #print(md5_string(event.group.name))
+
+                    if md5_string(group.name) == form.cleaned_data['groupname']:
                         try:
-                            g1 = event.group
+                            g1 = group
                             g1.user_set.add(response.user)
                         except:
                             print("User was on this group")

@@ -60,7 +60,7 @@ class AddeventForm(ModelForm):
         #}
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')
-        print(user)
+        #print(user)
         super(AddeventForm, self).__init__(*args, **kwargs)
         self.fields['name'].widget.attrs['class'] = 'form-control'
         self.fields['type'].widget.attrs['class'] = 'form-control'
@@ -74,8 +74,12 @@ class AddeventForm(ModelForm):
                                    'type' : 'datetime-local',
                                    'id':'datetime-local'})
         if user:
-            groups = Group.objects.filter(user__id__in=user.groups.all())
-            self.fields['group'].queryset = groups
-            #print(groups)
+            #print(user.username)
+            userq = Person.objects.get(username=user.username)
+            #print(Group.objects.all())
+            #print(user.groups.all())
+            #groups = Group.objects.all().filter(user__id__in=userq.all())
+            self.fields['group'].queryset = userq.groups.all()
+            print(self.fields['group'].queryset)
         #self.fields['date'].widget.attrs['type'] = 'datetime-local'
 
