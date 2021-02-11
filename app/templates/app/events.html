@@ -45,9 +45,8 @@
                     </div>
                     {% if user.is_authenticated == True %}
                         <div class="btn-group" role="group" aria-label="Osalasdfsdlistu">
-
-                            {% if event.eventsjoined_set.all|length < event.max %}
                                 <!-- Evil bitlevel hacking, link is set to hidden, if user is joined to the event. Notice the "<a" -->
+                            {% if event.eventsjoined_set.all|length < event.max %}
                                 <a {% for join in event.eventsjoined_set.all %}
                                     {% if join.person == request.user and join.join == True %}
                                         hidden 
@@ -61,7 +60,7 @@
                             {% endfor %}
 
                             {% if event.creator == request.user %}
-                                    <a class="btn btn-dark" href="{% url 'cancelevent' event.id  %}" type="button"><i class="bi bi-gear-fill"></i></a>
+                                    <a class="btn btn-dark" href="{% url 'eventsettings' event.id  %}" type="button"><i class="bi bi-gear-fill"></i></a>
 
                             {% endif %}
                         </div>

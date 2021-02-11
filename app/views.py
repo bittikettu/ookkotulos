@@ -16,7 +16,7 @@ import hashlib
 
 def extrashit(request):
     if(request.user):
-        addeventform = AddeventForm(user=request.user)
+        addeventform = AddeventForm(user = request.user)
         joingroupform = JoinGroup()
         addgroupform = CreateGroup()
         return {
@@ -39,7 +39,7 @@ def home(request):
             'year':2021,
             'users':Person.objects.all(),
             'events':Event.objects.all(),
-            'events_joinable':Event.objects.all().filter(date__gte=timezone.now()),
+            'events_joinable':Event.objects.all().filter(date__gte = timezone.now()),
             'joins': EventsJoined.objects.all(),
             'forms': extrashit(request),
         }
@@ -78,16 +78,16 @@ def about(request):
 
 def addevent(response):
     if response.method == "POST":
-        form = AddeventForm(response.POST, user=response.user)
+        form = AddeventForm(response.POST, user = response.user)
         if form.is_valid():
-            event = form.save(commit=False)
+            event = form.save(commit = False)
             event.creator = response.user
             event.save()
             form.save_m2m()
 # next = request.POST.get('next', '/')
         return redirect(response.POST.get('next', '/'))
     else:
-        form = AddeventForm(user=response.user)
+        form = AddeventForm(user = response.user)
     return render(
         response,
         "app/addevent.html",
@@ -95,6 +95,59 @@ def addevent(response):
             'title':'Luo',
             'message':'Luo uusi tapahtuma ja kutsu kaverit mukaan.',
             "form":form
+        }
+    )
+
+
+def eventremove(response, pk):
+    event = Event.objects.get(pk = pk)
+    event.delete()
+    return redirect('events')
+
+
+def eventsettings(response, pk):
+    event = Event.objects.get(pk = pk)
+    print(event)
+    print(pk)
+    if response.method == "POST":
+        form = AddeventForm(response.POST, user = response.user)
+        if form.is_valid():
+            #print(form.fields.items())
+            #print(form.changed_data)
+            print(form.cleaned_data['date'])
+            print(form['date'])
+            event.creator = response.user
+            event.name = form.cleaned_data['name']
+            event.type = form.cleaned_data['type']
+            event.max = form.cleaned_data['max']
+            event.date = form.cleaned_data['date']
+            event.description = form.cleaned_data['description']
+            event.save()
+            return redirect('events')
+            # eventselected = form.save(commit = False)
+            # eventselected.creator = response.user
+            # eventselected.save()
+            # form.save_m2m()
+#             return render(
+#                 response,
+#                 "app/eventsettings.html",
+#                 {
+#                     'title':'Muokkaa',
+#                     'message':'Muokkaa tapahtumaa',
+#                     "form": form
+#                 }
+#             )
+    else:
+        form = AddeventForm(user = response.user, instance = event)
+    return render(
+        response,
+        "app/eventsettings.html",
+        {
+            'title':'Muokkaa',
+            'message':'Muokkaa tapahtumaa',
+            "form": form,
+            'forms': extrashit(response),
+            "id" : pk,
         }
     )
 
@@ -120,7 +173,7 @@ def events(request):
             'forms': extrashit(request),
             'message':'Tulevat tapahtumat',
             # 'events': Event.objects.all().filter(date__gte=timezone.now()),
-            'events':Event.objects.all().filter(group__id__in=person.groups.all(), date__gte=timezone.now()).order_by('date'),
+            'events':Event.objects.all().filter(group__id__in = person.groups.all(), date__gte = timezone.now()).order_by('date'),
             # 'pastevents': Event.objects.all().filter(date__lte=timezone.now()),
             # 'eventsjoined': EventsJoined.objects.all().filter(join=True, event__date__gte=timezone.now()),
         }
@@ -135,29 +188,29 @@ def events(request):
                 'title':'Tapahtumat',
                 'message':'Tulevat tapahtumat',
                 # 'events': Event.objects.all().filter(date__gte=timezone.now()),
-                'events':Event.objects.all().filter(group__id__in=person.groups.all(), date__gte=timezone.now()).order_by('date'),
+                'events':Event.objects.all().filter(group__id__in = person.groups.all(), date__gte = timezone.now()).order_by('date'),
             }
         )
 
 
 def cancelevent(request, pk):
-    eventti = Event.objects.get(id=pk)
+    eventti = Event.objects.get(id = pk)
     person = request.user  # Person.objects.get(user=request.user)
-    joininfo = EventsJoined.objects.get(event=eventti, person=person)
+    joininfo = EventsJoined.objects.get(event = eventti, person = person)
     joininfo.delete()
 
     return redirect('events')
 
 
 def joinevent(request, pk):
-    eventti = Event.objects.get(id=pk)
+    eventti = Event.objects.get(id = pk)
     person = request.user  # Person.objects.get(user=request.user)
     # derp = person.event_set.add(eventti)
     # print(derp)
     try:
-        jointoevent = EventsJoined.objects.get(event=eventti, person=person)
+        jointoevent = EventsJoined.objects.get(event = eventti, person = person)
     except:
-        jointoevent = EventsJoined(person=person, event=eventti)
+        jointoevent = EventsJoined(person = person, event = eventti)
     jointoevent.jointoevent()
     # print(eventti)
     # print(jointoevent)
@@ -177,11 +230,11 @@ def register(response):
     if response.method == "POST":
         form = RegisterForm(response.POST)
         if form.is_valid():
-            u = form.save(commit=False)
+            u = form.save(commit = False)
             # person = Person.objects.get(id=u.id)
             # print(person)
             u.save()
-            permission = Permission.objects.get(name='Can add group')
+            permission = Permission.objects.get(name = 'Can add group')
             u.user_permissions.add(permission)
             u.save()
 
@@ -205,7 +258,7 @@ def creategroup(response):
     if response.method == "POST":
         form = CreateGroup(response.POST)
         if form.is_valid():
-            g1 = Group.objects.create(name=form.cleaned_data['groupname'])
+            g1 = Group.objects.create(name = form.cleaned_data['groupname'])
             g1.user_set.add(response.user)
         return redirect(response.POST.get('next', '/'))
         # return redirect("/events")
@@ -277,8 +330,8 @@ def user(request):
         'message':'Käyttäjän tiedot',
         'forms': extrashit(request),
         'groups': person,
-        'events':Event.objects.filter(group__id__in=person.groups.all()).order_by('date'),
-        'eventsjoined': Event.objects.filter(members=person).order_by('date'),
+        'events':Event.objects.filter(group__id__in = person.groups.all()).order_by('date'),
+        'eventsjoined': Event.objects.filter(members = person).order_by('date'),
         # 'pastevents': Event.objects.all().filter(date__lte=timezone.now()),
         # 'eventsjoined': EventsJoined.objects.all().filter(join=True, event__date__gte=timezone.now()),
     }

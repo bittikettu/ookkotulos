@@ -75,7 +75,7 @@ class AddeventForm(ModelForm):
         self.fields['description'].widget.attrs['class'] = 'form-control'
         self.fields['max'].widget.attrs['class'] = 'form-control'
         # self.fields['date'].widget.attrs['id'] = 'datetime-local'
-        self.fields['date'].widget = forms.DateTimeInput({
+        self.fields['date'].widget = forms.DateTimeInput(format = '%Y-%m-%dT%H:%M', attrs={
                                    'class': 'form-control',
                                    'name': 'date',
                                    'type': 'datetime-local',

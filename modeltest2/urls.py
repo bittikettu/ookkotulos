@@ -20,6 +20,8 @@ urlpatterns = [
     path("joingroup/", views.joingroup, name="joingroup"),
     path("user/", views.user, name="user"),
     path("addevent/", views.addevent, name="addevent"),
+    path('eventsettings/<str:pk>/', views.eventsettings, name='eventsettings'),
+    path('eventremove/<str:pk>/', views.eventremove, name='eventremove'),
     path('cancelevent/<str:pk>/', views.cancelevent, name='cancelevent'),
     path('joinevent/<str:pk>/', views.joinevent, name='joinevent'),
     path('login/',

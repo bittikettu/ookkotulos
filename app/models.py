@@ -68,6 +68,5 @@ class EventsJoined(models.Model):
     def __str__(self):
         return f'{self.event.name} {self.person.username}'
 
-# class EventsCancelled(EventsJoined):
- #   pass
+
 

@@ -1,0 +1,41 @@
+{% extends "app/layout.html" %}
+
+{% block deletemodal %}
+    <div class="modal fade" id="deleteEventModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><i class="bi bi-trash">Poista tapahtuma?</i></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+            <a data-bs-toggle="modal" data-bs-target="#deleteEventModal" data-bs-whatever="@mdo" class="btn btn-danger" href="{% url 'eventremove' id %}" type="button"><i class="bi bi-trash"></i></a>
+    		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Peruuta</button>
+      </div>
+    </div>
+  </div>
+</div> 
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+<h2>{{ title }}</h2>
+<h3>{{ message }}</h3>
+{% if user.is_authenticated == True %}
+    <form method="POST" class="form-group">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit" class="btn btn-success">Muokkaa</button>
+        <!-- <a data-bs-toggle="modal" data-bs-target="#deleteEventModal" data-bs-whatever="@mdo" class="btn btn-danger" href="#" type="button"><i class="bi bi-trash"></i></a>-->
+        <a class="btn btn-danger" href="{% url 'eventremove' id %}" type="button"><i class="bi bi-trash">Poista (poistaa heti)</i></a>
+    </form>
+    
+    </div>
+{% else %}
+    <div class="alert alert-info" role="alert">
+  Tapahtumiin luominen vaatii kirjautumisen.
+</div>
+{% endif %}
+
+{% endblock %}
