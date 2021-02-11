@@ -43,6 +43,7 @@ def home(request):
             'events_joinable':Event.objects.all().filter(date__gte = timezone.now()),
             'joins': EventsJoined.objects.all(),
             'forms': extrashit(request),
+            'news' : News.objects.all().order_by("id").reverse()
         }
     )
 
