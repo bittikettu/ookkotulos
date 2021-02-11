@@ -11,6 +11,20 @@
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap-utilities.min.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'app/icons/bootstrap-icons.css' %}"/>
     <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
+    <script>
+
+	function myFunction(id) {
+
+	  var copyText = document.getElementById(id.id);
+	  copyText.select();
+	  copyText.setSelectionRange(0, 99999);
+	  console.log(copyText)
+	  document.execCommand("copy");
+
+	}
+
+
+    </script>
 </head>
   <body>
   
