@@ -68,3 +68,9 @@ class EventsJoined(models.Model):
     def __str__(self):
         return f'{self.event.name} {self.person.username}'
 
+class News(models.Model):
+    creator = models.ForeignKey(Person, null = True, on_delete = models.SET_NULL, default = None, related_name = 'newscreator')
+    date = models.DateField(default = timezone.now)
+    description = models.TextField(max_length = 500, default = '')
+    
+    
