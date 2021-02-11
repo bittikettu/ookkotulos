@@ -4,3 +4,6 @@ staticfiles/*
 *.pyc
 app/migrations/__pycache__/*
 obj/*
+/.project
+/.pydevproject
+/.settings/

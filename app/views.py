@@ -27,6 +27,7 @@ def extrashit(request):
     else:
         return {}
 
+
 def home(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
@@ -40,9 +41,10 @@ def home(request):
             'events':Event.objects.all(),
             'events_joinable':Event.objects.all().filter(date__gte=timezone.now()),
             'joins': EventsJoined.objects.all(),
-            'forms' : extrashit(request),
+            'forms': extrashit(request),
         }
     )
+
 
 def contact(request):
     """Renders the contact page."""
@@ -54,9 +56,10 @@ def contact(request):
             'title':'Tekijät',
             'message':'Tekijät',
             'year':2021,
-            'forms' : extrashit(request),
+            'forms': extrashit(request),
         }
     )
+
 
 def about(request):
     """Renders the about page."""
@@ -68,25 +71,26 @@ def about(request):
             'title':'Sovelluksesta',
             'message':'Tietoa sovelluksesta',
             'year':2021,
-            'forms' : extrashit(request),
+            'forms': extrashit(request),
         }
     )
 
+
 def addevent(response):
     if response.method == "POST":
-        form = AddeventForm(response.POST,user=response.user)
+        form = AddeventForm(response.POST, user=response.user)
         if form.is_valid():
             event = form.save(commit=False)
             event.creator = response.user
             event.save()
             form.save_m2m()
-#next = request.POST.get('next', '/')
+# next = request.POST.get('next', '/')
         return redirect(response.POST.get('next', '/'))
     else:
         form = AddeventForm(user=response.user)
     return render(
-        response, 
-        "app/addevent.html", 
+        response,
+        "app/addevent.html",
         {
             'title':'Luo',
             'message':'Luo uusi tapahtuma ja kutsu kaverit mukaan.',
@@ -98,28 +102,27 @@ def addevent(response):
 def events(request):
     """Renders the about page."""
     assert isinstance(request, HttpRequest)
-    
 
     try:
-        person = request.user #Person.objects.get(user=request.user)
-        #addeventform = AddeventForm(user=request.user)
-        ##joingroupform = JoinGroup()
-        #addgroupform = CreateGroup()
+        person = request.user  # Person.objects.get(user=request.user)
+        # addeventform = AddeventForm(user=request.user)
+        # #joingroupform = JoinGroup()
+        # addgroupform = CreateGroup()
         return render(
         request,
         'app/events.html',
         {
             'year':2021,
             'title':'Tapahtumat',
-            #"addeventform":addeventform,
-            #"joingroupform":joingroupform,
-            #"newroupform":addgroupform,
-            'forms' : extrashit(request),
+            # "addeventform":addeventform,
+            # "joingroupform":joingroupform,
+            # "newroupform":addgroupform,
+            'forms': extrashit(request),
             'message':'Tulevat tapahtumat',
-            #'events': Event.objects.all().filter(date__gte=timezone.now()),
-            'events':Event.objects.all().filter(group__id__in=person.groups.all(),date__gte=timezone.now()).order_by('date'),
-            #'pastevents': Event.objects.all().filter(date__lte=timezone.now()),
-            #'eventsjoined': EventsJoined.objects.all().filter(join=True, event__date__gte=timezone.now()),
+            # 'events': Event.objects.all().filter(date__gte=timezone.now()),
+            'events':Event.objects.all().filter(group__id__in=person.groups.all(), date__gte=timezone.now()).order_by('date'),
+            # 'pastevents': Event.objects.all().filter(date__lte=timezone.now()),
+            # 'eventsjoined': EventsJoined.objects.all().filter(join=True, event__date__gte=timezone.now()),
         }
     )
     except:
@@ -131,15 +134,16 @@ def events(request):
                 'year':2021,
                 'title':'Tapahtumat',
                 'message':'Tulevat tapahtumat',
-                #'events': Event.objects.all().filter(date__gte=timezone.now()),
-                'events':Event.objects.all().filter(group__id__in=person.groups.all(),date__gte=timezone.now()).order_by('date'),
+                # 'events': Event.objects.all().filter(date__gte=timezone.now()),
+                'events':Event.objects.all().filter(group__id__in=person.groups.all(), date__gte=timezone.now()).order_by('date'),
             }
         )
 
+
 def cancelevent(request, pk):
     eventti = Event.objects.get(id=pk)
-    person = request.user #Person.objects.get(user=request.user)
-    joininfo = EventsJoined.objects.get(event=eventti,person=person)
+    person = request.user  # Person.objects.get(user=request.user)
+    joininfo = EventsJoined.objects.get(event=eventti, person=person)
     joininfo.delete()
 
     return redirect('events')
@@ -147,25 +151,25 @@ def cancelevent(request, pk):
 
 def joinevent(request, pk):
     eventti = Event.objects.get(id=pk)
-    person = request.user #Person.objects.get(user=request.user)
-    #derp = person.event_set.add(eventti)
-    #print(derp)
+    person = request.user  # Person.objects.get(user=request.user)
+    # derp = person.event_set.add(eventti)
+    # print(derp)
     try:
-        jointoevent = EventsJoined.objects.get(event=eventti,person=person)
+        jointoevent = EventsJoined.objects.get(event=eventti, person=person)
     except:
-        jointoevent = EventsJoined(person=person,event=eventti)
+        jointoevent = EventsJoined(person=person, event=eventti)
     jointoevent.jointoevent()
-    #print(eventti)
-    #print(jointoevent)
-    #print(person)
+    # print(eventti)
+    # print(jointoevent)
+    # print(person)
     jointoevent.save()
-    #LogEntry.objects.log_action(
+    # LogEntry.objects.log_action(
     #            user_id=request.user.id,
-     #           content_type_id=ContentType.objects.get_for_model(jointoevent).pk,
-     #           object_id=jointoevent.id,
-     #           object_repr=repr(jointoevent.title),
-     #           action_flag=ADDITION if create else CHANGE)
-    #return redirect(request.POST.get('next', '/'))
+    #           content_type_id=ContentType.objects.get_for_model(jointoevent).pk,
+    #           object_id=jointoevent.id,
+    #           object_repr=repr(jointoevent.title),
+    #           action_flag=ADDITION if create else CHANGE)
+    # return redirect(request.POST.get('next', '/'))
     return redirect('events')
 
 
@@ -174,8 +178,8 @@ def register(response):
         form = RegisterForm(response.POST)
         if form.is_valid():
             u = form.save(commit=False)
-            #person = Person.objects.get(id=u.id)
-            #print(person)
+            # person = Person.objects.get(id=u.id)
+            # print(person)
             u.save()
             permission = Permission.objects.get(name='Can add group')
             u.user_permissions.add(permission)
@@ -187,15 +191,14 @@ def register(response):
     else:
         form = RegisterForm()
     return render(
-        response, 
-        "app/register.html", 
+        response,
+        "app/register.html",
         {
             'title':'Liity',
             'message':'Liity tapahtumailmoon',
             "form":form
         }
     )
-
 
 
 def creategroup(response):
@@ -205,12 +208,12 @@ def creategroup(response):
             g1 = Group.objects.create(name=form.cleaned_data['groupname'])
             g1.user_set.add(response.user)
         return redirect(response.POST.get('next', '/'))
-        #return redirect("/events")
+        # return redirect("/events")
     else:
         form = CreateGroup()
     return render(
-        response, 
-        "app/creategroup.html", 
+        response,
+        "app/creategroup.html",
         {
             'title':'Tee uusi porukka',
             'message':'Luo uusi porukka kavereitasi varten',
@@ -218,11 +221,13 @@ def creategroup(response):
         }
     )
 
-#def md5_string(value):
+# def md5_string(value):
 #    return hashlib.md5(str(value).encode()).hexdigest()
+
 
 def md5_string(value):
     return hashlib.md5(value.encode()).hexdigest()
+
 
 def joingroup(response):
     if response.method == "POST":
@@ -232,7 +237,7 @@ def joingroup(response):
             for group in Group.objects.all():
 
                 try:
-                    #print(md5_string(event.group.name))
+                    # print(md5_string(event.group.name))
 
                     if md5_string(group.name) == form.cleaned_data['groupname']:
                         try:
@@ -244,12 +249,12 @@ def joingroup(response):
                         print("Group not found")
                 except:
                     pass
-        return redirect(response.POST.get('next', '/')) #return redirect("/events")
+        return redirect(response.POST.get('next', '/'))  # return redirect("/events")
     else:
         form = JoinGroup()
     return render(
-        response, 
-        "app/joingroup.html", 
+        response,
+        "app/joingroup.html",
         {
             'title':'Tee uusi porukka',
             'message':'Luo uusi porukka kavereitasi varten',
@@ -257,11 +262,12 @@ def joingroup(response):
         }
     )
 
+
 def user(request):
     """Renders the about page."""
     assert isinstance(request, HttpRequest)
 
-    person = request.user #Person.objects.get(user=request.user)
+    person = request.user  # Person.objects.get(user=request.user)
     return render(
     request,
     'app/user.html',
@@ -269,11 +275,11 @@ def user(request):
         'year':2021,
         'title':'Käyttäjän tiedot',
         'message':'Käyttäjän tiedot',
-        'forms' : extrashit(request),
+        'forms': extrashit(request),
         'groups': person,
         'events':Event.objects.filter(group__id__in=person.groups.all()).order_by('date'),
-        'eventsjoined' : Event.objects.filter(members=person).order_by('date'),
-        #'pastevents': Event.objects.all().filter(date__lte=timezone.now()),
-        #'eventsjoined': EventsJoined.objects.all().filter(join=True, event__date__gte=timezone.now()),
+        'eventsjoined': Event.objects.filter(members=person).order_by('date'),
+        # 'pastevents': Event.objects.all().filter(date__lte=timezone.now()),
+        # 'eventsjoined': EventsJoined.objects.all().filter(join=True, event__date__gte=timezone.now()),
     }
     )
