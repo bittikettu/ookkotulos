@@ -23,6 +23,7 @@ def extrashit(request):
             "addeventform":addeventform,
             "joingroupform":joingroupform,
             "newroupform":addgroupform,
+            'versio': "1.0",
             }
     else:
         return {}
