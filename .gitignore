@@ -2,3 +2,5 @@ staticfiles/*
 .vs/*
 .vs
 *.pyc
+app/migrations/__pycache__/*
+obj/*
