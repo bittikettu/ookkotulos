@@ -36,10 +36,10 @@
                     <div class="card text-white bg-success overflow-hidden">
                         <div class="card-body bg-success">
                             <div class="rotate">
-                                <i class="fa fa-user fa-5x"></i>
+                                
                             </div>
                             <h6 class="text-uppercase">K&auml;ytt&auml;ji&auml;</h6>
-                            <h1 class="display-1">{{ users.all|length }}</h1>
+                            <h1 class="display-1"><i class="bi bi-person"></i> {{ users.all|length }}</h1>
                         </div>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                                 <i class="fa fa-list fa-4x"></i>
                             </div>
                             <h6 class="text-uppercase">Tapahtumia</h6>
-                            <h1 class="display-1">{{ events_joinable.all|length }} / {{ events.all|length }}</h1>
+                            <h1 class="display-1"><i class="bi bi-calendar2-event"></i> {{ events_joinable.all|length }} / {{ events.all|length }}</h1>
                         </div>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                                 <i class="fa fa-twitter fa-5x"></i>
                             </div>
                             <h6 class="text-uppercase">Osallistumisia</h6>
-                            <h1 class="display-1">{{ joins|length }}</h1>
+                            <h1 class="display-1"><i class="bi bi-hand-thumbs-up"></i> {{ joins|length }}</h1>
                         </div>
                     </div>
                 </div>
