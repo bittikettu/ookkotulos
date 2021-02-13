@@ -242,7 +242,15 @@ def register(response):
 
             return redirect("/login")
         else:
-            return redirect("/register")
+            render(
+                response,
+                "app/register.html",
+                {
+                    'title':'Liity',
+                    'message':'Liity tapahtumailmoon',
+                    "form":form
+                }
+            )
     else:
         form = RegisterForm()
     return render(

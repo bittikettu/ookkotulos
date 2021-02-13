@@ -9,7 +9,16 @@
 <form method="POST" class="form-group">
     {% csrf_token %}
     {{ form }}
+
+	{% if form.errors %}
+	<div class="alert alert-danger" role="alert">
+  	{{ form.errors }}
+	</div>
+	
+	{% endif %}
+
     <button type="submit" class="btn btn-success">Liity</button>
+
 </form>
 </div>
 {% endblock %}

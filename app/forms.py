@@ -38,7 +38,15 @@ class RegisterForm(UserCreationForm):
 
     class Meta:
         model = Person
+
         fields = ["username", "email", "password1", "password2"]
+        labels = {
+                "username": "Käyttäjätunnus",
+                "email": "Sähköposti",
+                "password1": "Salasana",
+                "password2": "Salasana uudestaan",
+                }
+        
         widgets = {
             'username': forms.TextInput(attrs = {'class': 'form-control', 'id':'formGroupExampleInput', 'placeholder':'Käyttäjätunnus'}),
             'email': forms.TextInput(attrs = {'class': 'form-control', 'id':'formGroupExampleInput', 'placeholder':'Sähköposti'}),
@@ -59,6 +67,14 @@ class AddeventForm(ModelForm):
         model = Event
         fields = ["name", "type", "description", "max", "date", "group"]  # '__all__'#["username", "email", "password1", "password2"]
 
+        labels = {
+                "name": "Tapahtuman nimi",
+                "type": "Tapahtuman tyyppi",
+                "description": "Tapahtuman kuvaus",
+                "max": "Osallistujamäärä",
+                "date": "Päivämäärä",
+                "group": "Porukka",
+                }
         # widgets = {
         #    'username': forms.TextInput(attrs={'class': 'form-control','id':'formGroupExampleInput','placeholder':'Käyttäjätunnus'}),
         #    'email': forms.TextInput(attrs={'class': 'form-control','id':'formGroupExampleInput','placeholder':'Sähköposti'}),
