@@ -49,11 +49,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8"
-     inkscape:cx="123.37265"
-     inkscape:cy="-22.492426"
+     inkscape:zoom="3.959798"
+     inkscape:cx="146.75773"
+     inkscape:cy="3.0289075"
      inkscape:document-units="mm"
-     inkscape:current-layer="text8927"
+     inkscape:current-layer="g8956"
      showgrid="false"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -95,33 +95,24 @@
          ry="26.809746"
          transform="rotate(32.053276)" />
       <g
-         transform="translate(-300.94362,201.96403)"
-         id="g8919"
-         style="fill:#c9ccf2;fill-opacity:1;stroke:#ff7f2a">
-        <text
-           transform="rotate(34.704102)"
-           id="text8818-5-1"
-           y="203.34854"
-           x="293.58344"
-           style="font-style:normal;font-weight:normal;font-size:56.64278793px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#c9ccf2;fill-opacity:1;stroke:none;stroke-width:1.41606975"
-           xml:space="preserve"><tspan
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Unispace;-inkscape-font-specification:Unispace;fill:#c9ccf2;fill-opacity:1;stroke-width:1.41606975"
-             y="203.34854"
-             x="293.58344"
-             id="tspan8816-4-8"
-             sodipodi:role="line">?</tspan></text>
-        <text
-           transform="rotate(-145.2959)"
-           id="text8818-5-4-6"
-           y="-157.58121"
-           x="-302.48093"
-           style="font-style:normal;font-weight:normal;font-size:56.64278793px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#c9ccf2;fill-opacity:1;stroke:none;stroke-width:1.41606975"
-           xml:space="preserve"><tspan
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Unispace;-inkscape-font-specification:Unispace;fill:#c9ccf2;fill-opacity:1;stroke-width:1.41606975"
-             y="-157.58121"
-             x="-302.48093"
-             id="tspan8816-4-2-0"
-             sodipodi:role="line">?</tspan></text>
+         aria-label="?"
+         transform="rotate(34.704102)"
+         style="font-style:normal;font-weight:normal;font-size:56.64278793px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#c9ccf2;fill-opacity:1;stroke:none;stroke-width:1.41606975"
+         id="text8818-5-1">
+        <path
+           d="m 184.04625,494.95522 q 1.86922,0 3.45521,1.01957 1.586,0.96293 2.71886,2.71886 1.1895,1.75592 1.81257,4.07828 0.62307,2.32235 0.62307,4.98456 0,2.60557 -0.62307,4.87128 -0.56643,2.26571 -1.69929,3.965 -1.13285,1.64264 -2.71885,2.60557 -1.586,0.96292 -3.5685,0.96292 h -3.34192 q -4.98457,0 -4.98457,9.57263 h -3.56849 q -0.96293,-1.35942 -1.41607,-2.77549 -0.3965,-1.41607 -0.3965,-3.34193 0,-1.92585 0.56643,-3.62514 0.62307,-1.69928 1.69928,-2.88878 1.13286,-1.24614 2.60557,-1.92585 1.52935,-0.73636 3.34192,-0.73636 h 1.75593 q 1.81257,0 2.94542,-1.92585 1.13286,-1.9825 1.13286,-4.92793 0,-2.94542 -1.13286,-4.92792 -1.13285,-1.9825 -2.94542,-1.9825 h -16.02991 v -5.72092 z m -4.30485,38.17724 v 7.59014 h -10.36563 v -7.59014 z"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Unispace;-inkscape-font-specification:Unispace;fill:#c9ccf2;fill-opacity:1;stroke-width:1.41606975"
+           id="path10226" />
+      </g>
+      <g
+         aria-label="?"
+         transform="rotate(-145.2959)"
+         style="font-style:normal;font-weight:normal;font-size:56.64278793px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#c9ccf2;fill-opacity:1;stroke:none;stroke-width:1.41606975"
+         id="text8818-5-4-6">
+        <path
+           d="m -147.17636,-540.7226 q 1.86921,0 3.45521,1.01957 1.586,0.96292 2.71886,2.71885 1.1895,1.75593 1.81257,4.07828 0.62307,2.32236 0.62307,4.98457 0,2.60556 -0.62307,4.87128 -0.56643,2.26571 -1.69929,3.96499 -1.13285,1.64264 -2.71885,2.60557 -1.586,0.96293 -3.5685,0.96293 h -3.34192 q -4.98457,0 -4.98457,9.57263 h -3.56849 q -0.96293,-1.35943 -1.41607,-2.7755 -0.3965,-1.41607 -0.3965,-3.34192 0,-1.92586 0.56643,-3.62514 0.62307,-1.69928 1.69928,-2.88878 1.13286,-1.24614 2.60557,-1.92586 1.52935,-0.73635 3.34192,-0.73635 h 1.75593 q 1.81257,0 2.94542,-1.92586 1.13286,-1.9825 1.13286,-4.92792 0,-2.94543 -1.13286,-4.92792 -1.13285,-1.9825 -2.94542,-1.9825 h -16.02991 v -5.72092 z m -4.30485,38.17724 v 7.59013 h -10.36563 v -7.59013 z"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Unispace;-inkscape-font-specification:Unispace;fill:#c9ccf2;fill-opacity:1;stroke-width:1.41606975"
+           id="path10229" />
       </g>
       <g
          aria-label="OOKKO"
