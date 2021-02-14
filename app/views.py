@@ -104,8 +104,9 @@ def addevent(response):
 
 
 def eventremove(response, pk):
-    event = Event.objects.get(pk = pk)
-    event.delete()
+    if response.user.is_authenticated:
+        event = Event.objects.get(pk = pk)
+        event.delete()
     return redirect('events')
 
 
@@ -365,8 +366,4 @@ class EventList(ListView):
         print(self.request.user)
         context = super().get_context_data(**kwargs)
         context['forms'] = extrashit(self.request)
-        # Add in a QuerySet of all the books
-        #person = Person.objects.get(username=self.request.user)
-        #context['person_list'] = Person.objects.all()
-        #context['events'] = Event.objects.filter(group__id__in = person.groups.all()).order_by('date')
         return context

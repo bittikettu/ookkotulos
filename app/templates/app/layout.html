@@ -110,7 +110,7 @@
 {% endif %}
 
 
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
   <div class="container-fluid">
     <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'app/icons/ookkotulos.svg' %}" style="width: 200px; height:inherit"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -147,10 +147,11 @@
 
           </ul>
         </li>
-                  <li class="nav-item">
+
+          {% endif %}
+          <li class="nav-item">
           <a class="nav-link" href="{% url 'contact' %}"><i class="bi bi-info-circle"> Info</i></a>
         </li>
-          {% endif %}
       </ul>
         {% include 'app/loginpartial.html' %}
     </div>
