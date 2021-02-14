@@ -12,6 +12,8 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import Permission
 from django.contrib.auth.models import Group
 import hashlib
+from django.views.generic import ListView
+from django.views.generic.list import MultipleObjectTemplateResponseMixin
 
 
 def extrashit(request):
@@ -197,9 +199,14 @@ def events(request):
 
 def cancelevent(request, pk):
     eventti = Event.objects.get(id = pk)
+
+
     person = request.user  # Person.objects.get(user=request.user)
-    joininfo = EventsJoined.objects.get(event = eventti, person = person)
-    joininfo.delete()
+    try:
+        joininfo = EventsJoined.objects.get(event = eventti, person = person)
+        joininfo.delete()
+    except:
+        pass
 
     return redirect('events')
 
@@ -346,3 +353,20 @@ def user(request):
         # 'eventsjoined': EventsJoined.objects.all().filter(join=True, event__date__gte=timezone.now()),
     }
     )
+
+
+class EventList(ListView):
+    #model = Event
+
+    def get_queryset(self):
+        return Event.objects.filter(group__id__in = self.request.user.groups.all()).order_by('date')
+
+    def get_context_data(self, **kwargs):
+        print(self.request.user)
+        context = super().get_context_data(**kwargs)
+        context['forms'] = extrashit(self.request)
+        # Add in a QuerySet of all the books
+        #person = Person.objects.get(username=self.request.user)
+        #context['person_list'] = Person.objects.all()
+        #context['events'] = Event.objects.filter(group__id__in = person.groups.all()).order_by('date')
+        return context

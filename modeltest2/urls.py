@@ -8,17 +8,19 @@ from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView
 from app import forms, views
 import django.contrib.auth.forms
+from app.views import EventList
 
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('user/', EventList.as_view(), name="user"),
     path('contact/', views.contact, name='contact'),
     path('about/', views.about, name='about'),
     path('events/', views.events, name='events'),
     path("register/", views.register, name="register"),
     path("creategroup/", views.creategroup, name="creategroup"),
     path("joingroup/", views.joingroup, name="joingroup"),
-    path("user/", views.user, name="user"),
+    #path("user/", views.user, name="user"),
     path("addevent/", views.addevent, name="addevent"),
     path('eventsettings/<str:pk>/', views.eventsettings, name='eventsettings'),
     path('eventremove/<str:pk>/', views.eventremove, name='eventremove'),
