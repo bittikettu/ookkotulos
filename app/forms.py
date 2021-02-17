@@ -61,7 +61,7 @@ class RegisterForm(UserCreationForm):
         self.fields['password2'].widget.attrs['class'] = 'form-control'
 
 
-class AddeventForm(ModelForm):
+class CreateEventForm(ModelForm):
 
     class Meta:
         model = Event
@@ -75,16 +75,11 @@ class AddeventForm(ModelForm):
                 "date": "Päivämäärä",
                 "group": "Porukka",
                 }
-        # widgets = {
-        #    'username': forms.TextInput(attrs={'class': 'form-control','id':'formGroupExampleInput','placeholder':'Käyttäjätunnus'}),
-        #    'email': forms.TextInput(attrs={'class': 'form-control','id':'formGroupExampleInput','placeholder':'Sähköposti'}),
-        #    'password1': forms.PasswordInput(),
-        #    'password2': forms.PasswordInput(),
-        # }
+
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')
-        # print(user)
-        super(AddeventForm, self).__init__(*args, **kwargs)
+        #print(kwargs.pop('user'))
+        super(CreateEventForm, self).__init__(*args, **kwargs)
         self.fields['name'].widget.attrs['class'] = 'form-control'
         self.fields['type'].widget.attrs['class'] = 'form-control'
         self.fields['group'].widget.attrs['class'] = 'form-control'
@@ -100,12 +95,10 @@ class AddeventForm(ModelForm):
             # print(user.username)
             try:
                 userq = Person.objects.get(username = user.username)
-                # print(Group.objects.all())
-                # print(user.groups.all())
-                # groups = Group.objects.all().filter(user__id__in=userq.all())
                 self.fields['group'].queryset = userq.groups.all()
                 print(self.fields['group'].queryset)
             except:
                 pass
         # self.fields['date'].widget.attrs['type'] = 'datetime-local'
+
 

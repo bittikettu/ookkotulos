@@ -12,20 +12,26 @@ from app.views import EventList
 
 
 urlpatterns = [
+    #common shiz
     path('', views.home, name='home'),
-    path('user/', EventList.as_view(), name="user"),
     path('contact/', views.contact, name='contact'),
     path('about/', views.about, name='about'),
-    path('events/', views.events, name='events'),
+    
+    # group management
+    path("group/create/", views.creategroup, name="creategroup"),
+    path("group/join/", views.joingroup, name="joingroup"),
+    
+    # event management
+    path('event/all/', views.events, name='events'),
+    path("event/add/", views.CreateEventView.as_view(), name="addevent"),
+    path('event/modify/<str:pk>/', views.eventsettings, name='eventsettings'),
+    path('event/remove/<str:pk>/', views.eventremove, name='eventremove'),
+    path('event/cancel/<str:pk>/', views.cancelevent, name='cancelevent'),
+    path('event/join/<str:pk>/', views.joinevent, name='joinevent'),
+    
+    # user management
     path("register/", views.register, name="register"),
-    path("creategroup/", views.creategroup, name="creategroup"),
-    path("joingroup/", views.joingroup, name="joingroup"),
-    #path("user/", views.user, name="user"),
-    path("addevent/", views.addevent, name="addevent"),
-    path('eventsettings/<str:pk>/', views.eventsettings, name='eventsettings'),
-    path('eventremove/<str:pk>/', views.eventremove, name='eventremove'),
-    path('cancelevent/<str:pk>/', views.cancelevent, name='cancelevent'),
-    path('joinevent/<str:pk>/', views.joinevent, name='joinevent'),
+    path('user/', EventList.as_view(), name="user"),
     path('login/',
          LoginView.as_view
          (

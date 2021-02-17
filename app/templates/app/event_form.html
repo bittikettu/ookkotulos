@@ -1,0 +1,21 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+<div class="container">
+<h2>{{ title }}</h2>
+<h3>{{ message }}</h3>
+{% if user.is_authenticated == True %}
+
+    <form method="POST" class="form-group">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit" class="btn btn-success">Luo tapahtuma</button>
+    </form>
+    </div>
+{% else %}
+    <div class="alert alert-info" role="alert">
+  Tapahtumiin luominen vaatii kirjautumisen.
+</div>
+{% endif %}
+
+{% endblock %}

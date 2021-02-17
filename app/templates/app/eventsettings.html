@@ -31,6 +31,11 @@
         <a class="btn btn-danger" href="{% url 'eventremove' id %}" type="button"><i class="bi bi-trash">Poista (poistaa heti)</i></a>
     </form>
     
+    <ul>
+    {% for change in changes %}
+    	<li>{{ change.change_message }}</lie>
+    {% endfor %}
+    </ul>
     </div>
 {% else %}
     <div class="alert alert-info" role="alert">

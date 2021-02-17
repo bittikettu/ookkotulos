@@ -7,18 +7,20 @@ from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from .models import *
 from .forms import *
-from django.contrib.admin.models import LogEntry, ADDITION, CHANGE
+from django.contrib.admin.models import LogEntry, ADDITION, CHANGE,DELETION
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import Permission
 from django.contrib.auth.models import Group
 import hashlib
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
 from django.views.generic.list import MultipleObjectTemplateResponseMixin
+from django.urls import reverse
+from .utils import logshit
 
 
 def extrashit(request):
     if(request.user):
-        addeventform = AddeventForm(user = request.user)
+        addeventform = CreateEventForm(user = request.user)
         joingroupform = JoinGroup()
         addgroupform = CreateGroup()
         return {
@@ -80,32 +82,11 @@ def about(request):
     )
 
 
-def addevent(response):
-    if response.method == "POST":
-        form = AddeventForm(response.POST, user = response.user)
-        if form.is_valid():
-            event = form.save(commit = False)
-            event.creator = response.user
-            event.save()
-            form.save_m2m()
-# next = request.POST.get('next', '/')
-        return redirect(response.POST.get('next', '/'))
-    else:
-        form = AddeventForm(user = response.user)
-    return render(
-        response,
-        "app/addevent.html",
-        {
-            'title':'Luo',
-            'message':'Luo uusi tapahtuma ja kutsu kaverit mukaan.',
-            "form":form
-        }
-    )
-
 
 def eventremove(response, pk):
     if response.user.is_authenticated:
         event = Event.objects.get(pk = pk)
+        logshit(response, event, "message",DELETION)
         event.delete()
     return redirect('events')
 
@@ -115,7 +96,7 @@ def eventsettings(response, pk):
     print(event)
     print(pk)
     if response.method == "POST":
-        form = AddeventForm(response.POST, user = response.user)
+        form = CreateEventForm(response.POST, user = response.user)
         if form.is_valid():
             #print(form.fields.items())
             #print(form.changed_data)
@@ -128,6 +109,7 @@ def eventsettings(response, pk):
             event.date = form.cleaned_data['date']
             event.description = form.cleaned_data['description']
             event.save()
+            logshit(response, event, "message",CHANGE)
             return redirect('events')
             # eventselected = form.save(commit = False)
             # eventselected.creator = response.user
@@ -143,7 +125,7 @@ def eventsettings(response, pk):
 #                 }
 #             )
     else:
-        form = AddeventForm(user = response.user, instance = event)
+        form = CreateEventForm(user = response.user, instance = event)
     return render(
         response,
         "app/eventsettings.html",
@@ -152,6 +134,7 @@ def eventsettings(response, pk):
             'message':'Muokkaa tapahtumaa',
             "form": form,
             'forms': extrashit(response),
+            'changes': LogEntry.objects.all().filter(content_type=ContentType.objects.get_for_model(Event),object_id=pk),
             "id" : pk,
         }
     )
@@ -225,6 +208,7 @@ def joinevent(request, pk):
     # print(eventti)
     # print(jointoevent)
     # print(person)
+    logshit(request, jointoevent, "message",ADDITION)
     jointoevent.save()
     # LogEntry.objects.log_action(
     #            user_id=request.user.id,
@@ -278,6 +262,7 @@ def creategroup(response):
         if form.is_valid():
             g1 = Group.objects.create(name = form.cleaned_data['groupname'])
             g1.user_set.add(response.user)
+            logshit(response, g1, "message",ADDITION)
         return redirect(response.POST.get('next', '/'))
         # return redirect("/events")
     else:
@@ -291,9 +276,6 @@ def creategroup(response):
             "form":form
         }
     )
-
-# def md5_string(value):
-#    return hashlib.md5(str(value).encode()).hexdigest()
 
 
 def md5_string(value):
@@ -314,6 +296,7 @@ def joingroup(response):
                         try:
                             g1 = group
                             g1.user_set.add(response.user)
+                            logshit(response, g1, "message",ADDITION)
                         except:
                             print("User was on this group")
                     else:
@@ -334,36 +317,45 @@ def joingroup(response):
     )
 
 
-def user(request):
-    """Renders the about page."""
-    assert isinstance(request, HttpRequest)
+class CreateEventView(CreateView):
+    model = Event
+    form_class = CreateEventForm
+        
+    #def dispatch(self, *args, **kwargs):
+    #    return super(CreateEventView, self).dispatch(*args, **kwargs)
 
-    person = request.user  # Person.objects.get(user=request.user)
-    return render(
-    request,
-    'app/user.html',
-    {
-        'year':2021,
-        'title':'Käyttäjän tiedot',
-        'message':'Käyttäjän tiedot',
-        'forms': extrashit(request),
-        'groups': person,
-        'events':Event.objects.filter(group__id__in = person.groups.all()).order_by('date'),
-        'eventsjoined': Event.objects.filter(members = person).order_by('date'),
-        # 'pastevents': Event.objects.all().filter(date__lte=timezone.now()),
-        # 'eventsjoined': EventsJoined.objects.all().filter(join=True, event__date__gte=timezone.now()),
-    }
-    )
+    def get_form_kwargs(self):
+        kwargs = super(CreateEventView, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+    
+    def form_valid(self, form):
+        """If the form is valid, save the associated model."""
+        self.object = form.save(commit=False)
+        self.object.creator = self.request.user
+        self.object.save()
+        form.save_m2m()
+        logshit(self.request, self.object, "message",ADDITION)
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse("events") #return reverse('system-detail', kwargs={'pk': self.object.pk})
 
 
 class EventList(ListView):
-    #model = Event
+    model = Event
 
     def get_queryset(self):
-        return Event.objects.filter(group__id__in = self.request.user.groups.all()).order_by('date')
+        return Event.objects.filter(group__id__in=self.request.user.groups.all()).order_by('date')
 
     def get_context_data(self, **kwargs):
         print(self.request.user)
         context = super().get_context_data(**kwargs)
         context['forms'] = extrashit(self.request)
+        context['year'] = 2021
+        context['title'] = 'Käyttäjän tiedot'
+        context['message'] = 'Käyttäjän tiedot'
+        context['changes'] = LogEntry.objects.all().filter(user=self.request.user)
+        print(LogEntry.objects.all().filter(user=self.request.user))
+        
         return context

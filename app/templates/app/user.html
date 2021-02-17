@@ -25,6 +25,12 @@
     <div class="container">
         <h2>{{ title }}</h2>
         <h3>{{ message }}</h3>
+        
+            <ul>
+    {% for change in changes %}
+    	<li>{{ change.change_message }}</lie>
+    {% endfor %}
+    </ul>
 
         <h1>{{ request.user }}</h1>
         <hr />
